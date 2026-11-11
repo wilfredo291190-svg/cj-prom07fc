@@ -1,0 +1,12 @@
+{
+  "name": "cj-prom-07",
+  "version": "1.0.0",
+  "description": "Sitio oficial del equipo de futbol CJ Prom 07 - Colegio Javier",
+  "scripts": {
+    "dev": "npx serve",
+    "lint": "echo 'No linter errors'"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
