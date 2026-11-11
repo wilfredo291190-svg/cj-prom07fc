@@ -5,90 +5,69 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CJ Prom 07 | Fútbol Exalumnos Colegio Javier</title>
   <meta name="description" content="Sitio oficial del equipo de fútbol CJ Prom 07. Calendario, resultados, estadísticas y activaciones de partidos.">
+  <meta name="theme-color" content="#0A0A0C">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CJ Prom 07 | Fútbol Exalumnos Colegio Javier">
+  <meta property="og:description" content="Calendario, resultados, plantel y estadísticas de CJ Prom 07.">
+  <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header>
     <div class="nav-container">
       <a href="index.html" class="brand">CJ PROM 07</a>
+      <nav aria-label="Navegación principal">
       <ul class="nav-links">
-        <li><a href="index.html" class="active">Inicio</a></li>
+        <li><a href="index.html" class="active" aria-current="page">Inicio</a></li>
         <li><a href="calendario.html">Calendario</a></li>
         <li><a href="plantel.html">Plantel</a></li>
         <li><a href="estadisticas.html">Estadísticas</a></li>
       </ul>
+      </nav>
     </div>
   </header>
 
-  <main>
+  <main id="contenido" data-view="inicio">
     <h1>Temporada Oficial</h1>
-    <p class="subtitle">Seguimiento en tiempo real, próximos encuentros y estadísticas del equipo.</p>
+    <p class="subtitle">Calendario, resultados y estadísticas del equipo.</p>
 
     <div class="grid-dashboard">
-      <section class="card">
-        <h2>Próximo Encuentro</h2>
-        <div class="match-banner">
-          <div class="team">CJ Prom 07</div>
-          <div class="vs">vs</div>
-          <div class="team">Promoción 05</div>
-        </div>
-        <div class="match-info">
-          <p>📅 Sábado, 15 de Noviembre • 4:00 PM</p>
-          <p>🏟️ Complejo Deportivo San Fernando (Cancha 1)</p>
-        </div>
-        <button id="notif-btn" class="btn">Activar Notificaciones Push</button>
+      <section class="card" aria-labelledby="next-title">
+        <h2 id="next-title">Próximo Encuentro</h2>
+        <div id="next-match" aria-live="polite"><p class="empty-state">Cargando calendario...</p></div>
       </section>
 
-      <section class="card">
-        <h2>Último Resultado</h2>
-        <div class="match-banner">
-          <div class="team">CJ Prom 07</div>
-          <div class="vs" style="font-size: 1.5rem; color: var(--success); font-weight: 700;">3 - 1</div>
-          <div class="team">Promoción 12</div>
-        </div>
-        <div class="match-info">
-          <p>⚽ Goles: R. Smith (2), A. Méndez (1)</p>
-          <p>📊 Jornada 8 • Fase Regular</p>
-        </div>
+      <section class="card" aria-labelledby="latest-title">
+        <h2 id="latest-title">Último Resultado</h2>
+        <div id="latest-result" aria-live="polite"><p class="empty-state">Cargando resultados...</p></div>
       </section>
     </div>
 
     <section class="card">
-      <h2>Tabla de Goleadores (Top 3)</h2>
+      <h2>Posiciones</h2>
+      <div class="table-scroll">
       <table>
         <thead>
           <tr>
-            <th>Jugador</th>
-            <th>Posición</th>
-            <th>Goles</th>
+            <th scope="col">Pos.</th><th scope="col">Equipo</th><th scope="col">PJ</th><th scope="col">DG</th><th scope="col">Pts.</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>Wilfredo Smith</td>
-            <td>Delantero</td>
-            <td>9</td>
-          </tr>
-          <tr>
-            <td>Alberto Méndez</td>
-            <td>Mediocampista</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <td>Carlos Valdés</td>
-            <td>Delantero</td>
-            <td>5</td>
-          </tr>
-        </tbody>
+        <tbody id="home-standings"><tr><td colspan="5" class="empty-state">Cargando posiciones...</td></tr></tbody>
       </table>
+      </div>
     </section>
+    <p class="notice">Los avisos push requieren configurar un servicio de envío antes de poder activarse.</p>
   </main>
 
   <footer>
-    <p>&copy; 2026 CJ Prom 07 • Colegio Javier. Todos los derechos reservados.</p>
+    <p>&copy; 2026 CJ Prom 07 · Colegio Javier</p>
+    <a href="admin/">Administración</a>
   </footer>
 
   <script src="js/app.js"></script>
-  <script src="js/notifications.js"></script>
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"SportsTeam","name":"CJ Prom 07","sport":"Association football","memberOf":{"@type":"Organization","name":"Colegio Javier"}}
+  </script>
 </body>
 </html>

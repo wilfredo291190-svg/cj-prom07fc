@@ -4,63 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plantel | CJ Prom 07</title>
+  <meta name="description" content="Plantel oficial de jugadores de CJ Prom 07.">
+  <meta name="theme-color" content="#0A0A0C">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Plantel | CJ Prom 07">
+  <meta property="og:description" content="Nómina de jugadores del equipo CJ Prom 07.">
+  <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header>
     <div class="nav-container">
       <a href="index.html" class="brand">CJ PROM 07</a>
-      <ul class="nav-links">
+      <nav aria-label="Navegación principal"><ul class="nav-links">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="calendario.html">Calendario</a></li>
-        <li><a href="plantel.html" class="active">Plantel</a></li>
+        <li><a href="plantel.html" class="active" aria-current="page">Plantel</a></li>
         <li><a href="estadisticas.html">Estadísticas</a></li>
-      </ul>
+      </ul></nav>
     </div>
   </header>
 
-  <main>
+  <main id="contenido" data-view="plantel">
     <h1>Plantel Oficial</h1>
-    <p class="subtitle">Nómina de jugadores inscritos para el torneo de exalumnos.</p>
+    <p class="subtitle">Nómina de jugadores del equipo.</p>
     
     <section class="card">
       <h2>Jugadores Convocados</h2>
-      <table>
+      <div class="table-scroll"><table>
         <thead>
           <tr>
-            <th>Dorsal</th>
-            <th>Nombre</th>
-            <th>Posición</th>
+            <th scope="col">Dorsal</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Posición</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>#10</td>
-            <td>Wilfredo Smith</td>
-            <td>Delantero</td>
-          </tr>
-          <tr>
-            <td>#8</td>
-            <td>Alberto Méndez</td>
-            <td>Mediocampista</td>
-          </tr>
-          <tr>
-            <td>#9</td>
-            <td>Carlos Valdés</td>
-            <td>Delantero</td>
-          </tr>
-          <tr>
-            <td>#1</td>
-            <td>Javier Sossa</td>
-            <td>Portero</td>
-          </tr>
-        </tbody>
-      </table>
+        <tbody id="roster-table"><tr><td colspan="3" class="empty-state">Cargando plantel...</td></tr></tbody>
+      </table></div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2026 CJ Prom 07 • Colegio Javier. Todos los derechos reservados.</p>
+    <p>&copy; 2026 CJ Prom 07 · Colegio Javier</p>
   </footer>
+  <script src="js/app.js"></script>
 </body>
 </html>

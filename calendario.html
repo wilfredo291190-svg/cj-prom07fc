@@ -4,56 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calendario | CJ Prom 07</title>
+  <meta name="description" content="Consulta las próximas jornadas y los resultados de CJ Prom 07.">
+  <meta name="theme-color" content="#0A0A0C">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Calendario | CJ Prom 07">
+  <meta property="og:description" content="Partidos programados y resultados publicados de CJ Prom 07.">
+  <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header>
     <div class="nav-container">
       <a href="index.html" class="brand">CJ PROM 07</a>
-      <ul class="nav-links">
+      <nav aria-label="Navegación principal"><ul class="nav-links">
         <li><a href="index.html">Inicio</a></li>
-        <li><a href="calendario.html" class="active">Calendario</a></li>
+        <li><a href="calendario.html" class="active" aria-current="page">Calendario</a></li>
         <li><a href="plantel.html">Plantel</a></li>
         <li><a href="estadisticas.html">Estadísticas</a></li>
-      </ul>
+      </ul></nav>
     </div>
   </header>
 
-  <main>
+  <main id="contenido" data-view="calendario">
     <h1>Calendario de Partidos</h1>
-    <p class="subtitle">Jornadas oficiales de la temporada y programación de encuentros.</p>
-    
-    <div class="grid-dashboard">
-      <section class="card">
-        <h2>Jornada 9</h2>
-        <div class="match-banner">
-          <div class="team">CJ Prom 07</div>
-          <div class="vs">vs</div>
-          <div class="team">Promoción 05</div>
-        </div>
-        <div class="match-info">
-          <p>📅 Sábado, 15 de Noviembre • 4:00 PM</p>
-          <p>🏟️ Complejo Deportivo San Fernando (Cancha 1)</p>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>Jornada 10</h2>
-        <div class="match-banner">
-          <div class="team">CJ Prom 07</div>
-          <div class="vs">vs</div>
-          <div class="team">Promoción 10</div>
-        </div>
-        <div class="match-info">
-          <p>📅 Sábado, 22 de Noviembre • 5:30 PM</p>
-          <p>🏟️ Complejo Deportivo San Fernando (Cancha 2)</p>
-        </div>
-      </section>
-    </div>
+    <p class="subtitle">Partidos programados y resultados publicados.</p>
+    <div id="calendar-list" class="match-list" aria-live="polite"><p class="empty-state">Cargando calendario...</p></div>
   </main>
 
   <footer>
-    <p>&copy; 2026 CJ Prom 07 • Colegio Javier. Todos los derechos reservados.</p>
+    <p>&copy; 2026 CJ Prom 07 · Colegio Javier</p>
   </footer>
+  <script src="js/app.js"></script>
 </body>
 </html>

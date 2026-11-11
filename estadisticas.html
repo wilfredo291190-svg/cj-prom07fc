@@ -4,62 +4,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Goleadores y Estadísticas | CJ Prom 07</title>
+  <meta name="description" content="Tabla de posiciones y goleadores de CJ Prom 07, calculados desde los resultados publicados.">
+  <meta name="theme-color" content="#0A0A0C">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Goleadores y Estadísticas | CJ Prom 07">
+  <meta property="og:description" content="Tabla de posiciones y goleadores calculados a partir de resultados publicados.">
+  <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header>
     <div class="nav-container">
       <a href="index.html" class="brand">CJ PROM 07</a>
-      <ul class="nav-links">
+      <nav aria-label="Navegación principal"><ul class="nav-links">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="calendario.html">Calendario</a></li>
         <li><a href="plantel.html">Plantel</a></li>
-        <li><a href="estadisticas.html">Estadísticas</a></li>
-      </ul>
+        <li><a href="estadisticas.html" class="active" aria-current="page">Estadísticas</a></li>
+      </ul></nav>
     </div>
   </header>
 
-  <main>
+  <main id="contenido" data-view="estadisticas">
     <h1>Estadísticas y Goleadores</h1>
-    <p class="subtitle">Tabla general de anotadores de la promoción en el torneo.</p>
+    <p class="subtitle">Estadísticas calculadas a partir de los partidos finalizados.</p>
     
     <section class="card">
       <h2>Tabla de Goleo Oficial</h2>
       <table>
         <thead>
-          <tr>
-            <th>Pos</th>
-            <th>Jugador</th>
-            <th>Posición</th>
-            <th>Goles</th>
-          </tr>
+          <tr><th scope="col">Pos.</th><th scope="col">Jugador</th><th scope="col">Goles</th></tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Wilfredo Smith</td>
-            <td>Delantero</td>
-            <td>9</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Alberto Méndez</td>
-            <td>Mediocampista</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Carlos Valdés</td>
-            <td>Delantero</td>
-            <td>5</td>
-          </tr>
-        </tbody>
+        <tbody id="scorers-table"><tr><td colspan="3" class="empty-state">Cargando goleadores...</td></tr></tbody>
       </table>
+    </section>
+    <section class="card">
+      <h2>Tabla de Posiciones</h2>
+      <div class="table-scroll"><table>
+        <thead><tr><th scope="col">Pos.</th><th scope="col">Equipo</th><th scope="col">PJ</th><th scope="col">G</th><th scope="col">E</th><th scope="col">P</th><th scope="col">GF</th><th scope="col">GC</th><th scope="col">DG</th><th scope="col">Pts.</th></tr></thead>
+        <tbody id="standings-table"><tr><td colspan="10" class="empty-state">Cargando posiciones...</td></tr></tbody>
+      </table></div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2026 CJ Prom 07 • Colegio Javier. Todos los derechos reservados.</p>
+    <p>&copy; 2026 CJ Prom 07 · Colegio Javier</p>
   </footer>
+  <script src="js/app.js"></script>
 </body>
 </html>

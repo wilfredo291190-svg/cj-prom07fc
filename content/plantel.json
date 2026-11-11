@@ -1,6 +1,3 @@
 {
-  "jugadores": [
-    { "nombre": "Wilfredo Smith", "dorsal": 10, "posicion": "Delantero", "goles": 9 },
-    { "nombre": "Alberto Méndez", "dorsal": 8, "posicion": "Mediocampista", "goles": 6 }
-  ]
+  "jugadores": []
 }

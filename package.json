@@ -4,7 +4,7 @@
   "description": "Sitio oficial del equipo de futbol CJ Prom 07 - Colegio Javier",
   "scripts": {
     "dev": "npx serve",
-    "lint": "echo 'No linter errors'"
+    "lint": "node --check js/app.js && node --check js/sw.js && node --check api/robots.js && node --check api/sitemap.js && node scripts/validate-content.mjs"
   },
   "devDependencies": {
     "serve": "^14.2.1"
