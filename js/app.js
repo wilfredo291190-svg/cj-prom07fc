@@ -1,8 +1,8 @@
 const PAGE = document.querySelector("main[data-view]")?.dataset.view;
 const CLUB_NAME = "CJ Prom 07";
+const DEFAULT_VENUE = "Cancha del Colegio Javier";
 let currentPlayers = [];
 let currentMatches = [];
-let currentTeams = [CLUB_NAME];
 
 const escapeHTML = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -18,7 +18,7 @@ const sameTeam = (first, second) => normalizeTeamName(first) === normalizeTeamNa
 const formatDate = (value) => {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "Fecha por confirmar";
-  return new Intl.DateTimeFormat("es", { dateStyle: "full", timeStyle: "short", timeZone: "America/Panama" }).format(date);
+  return new Intl.DateTimeFormat("es", { dateStyle: "full", timeStyle: "short", timeZone: "America/Panama", hourCycle: "h12" }).format(date);
 };
 
 const matchTime = (match) => {
@@ -48,45 +48,8 @@ const matchCard = (match, clubName = CLUB_NAME) => {
   return `<article class="card match-card" data-status="${escapeHTML(match.estado)}">
     <div class="match-card-heading"><h2>Jornada ${escapeHTML(match.jornada)}</h2><span class="match-status" data-tone="${tone}">${label}</span></div>
     <div class="match-banner"><span class="team">${escapeHTML(match.local)}</span><strong class="vs${finished ? " score" : ""}">${score}</strong><span class="team">${escapeHTML(match.visitante)}</span></div>
-    <div class="match-info"><p><time datetime="${escapeHTML(match.fecha)}">${escapeHTML(formatDate(match.fecha))}</time></p><p>${escapeHTML(match.sede || "Sede por confirmar")}</p>${scorers ? `<p>Goleadores: ${scorers}</p>` : ""}</div>
+    <div class="match-info"><p><time datetime="${escapeHTML(match.fecha)}">${escapeHTML(formatDate(match.fecha))}</time></p><p>${escapeHTML(match.sede || DEFAULT_VENUE)}</p>${scorers ? `<p>Goleadores: ${scorers}</p>` : ""}</div>
   </article>`;
-};
-
-const calculateStandings = (matches, teamNames) => {
-  const standings = new Map();
-  const getTeam = (name) => {
-    const rawName = String(name || "").trim();
-    const teamName = [...standings.keys()].find((existing) => sameTeam(existing, rawName)) || rawName;
-    if (!standings.has(teamName)) standings.set(teamName, { equipo: teamName, pj: 0, ganados: 0, empatados: 0, perdidos: 0, gf: 0, gc: 0, pts: 0 });
-    return standings.get(teamName);
-  };
-
-  teamNames.forEach(getTeam);
-  for (const match of completedMatches(matches)) {
-    if (!String(match.local || "").trim() || !String(match.visitante || "").trim()) continue;
-    const home = getTeam(match.local);
-    const away = getTeam(match.visitante);
-    const homeGoals = Number(match.golesLocal);
-    const awayGoals = Number(match.golesVisitante);
-    home.pj += 1;
-    away.pj += 1;
-    home.gf += homeGoals;
-    home.gc += awayGoals;
-    away.gf += awayGoals;
-    away.gc += homeGoals;
-    if (homeGoals > awayGoals) {
-      home.ganados += 1; away.perdidos += 1; home.pts += 3;
-    } else if (homeGoals < awayGoals) {
-      away.ganados += 1; home.perdidos += 1; away.pts += 3;
-    } else {
-      home.empatados += 1; away.empatados += 1; home.pts += 1; away.pts += 1;
-    }
-  }
-
-  return [...standings.values()].filter((team) => team.equipo).sort((first, second) => second.pts - first.pts
-    || (second.gf - second.gc) - (first.gf - first.gc)
-    || second.gf - first.gf
-    || first.equipo.localeCompare(second.equipo, "es"));
 };
 
 const calculateScorers = (matches) => {
@@ -102,72 +65,86 @@ const calculateScorers = (matches) => {
     .sort((first, second) => second.goles - first.goles || first.jugador.localeCompare(second.jugador, "es"));
 };
 
+const findPlayer = (players, name) => {
+  const scorerName = normalizeName(name);
+  const exactMatch = players.find((player) => normalizeName(player.nombre) === scorerName);
+  const surnameMatches = players.filter((player) => normalizeName(player.nombre).endsWith(` ${scorerName}`));
+  return exactMatch || (surnameMatches.length === 1 ? surnameMatches[0] : null);
+};
+
 const calculatePlayerGoals = (players, matches) => {
   const totals = new Map(players.map((player) => [player.nombre, 0]));
   for (const scorer of calculateScorers(matches)) {
-    const scorerName = normalizeName(scorer.jugador);
-    const exactMatch = players.find((player) => normalizeName(player.nombre) === scorerName);
-    const surnameMatches = players.filter((player) => normalizeName(player.nombre).endsWith(` ${scorerName}`));
-    const player = exactMatch || (surnameMatches.length === 1 ? surnameMatches[0] : null);
+    const player = findPlayer(players, scorer.jugador);
     if (player) totals.set(player.nombre, (totals.get(player.nombre) || 0) + scorer.goles);
   }
   return totals;
 };
 
-const renderStandings = (matches, teamNames) => {
-  const standings = calculateStandings(matches, teamNames);
-  const homeBody = document.querySelector("#home-standings");
-  const fullBody = document.querySelector("#standings-table");
-  const row = (team, index, full) => {
-    const isClub = sameTeam(team.equipo, CLUB_NAME);
-    const classes = [isClub ? "is-cj-team" : "", index === 0 && team.pj > 0 ? "is-leader" : ""].filter(Boolean).join(" ");
-    const cells = full
-      ? `<td>${team.pj}</td><td>${team.ganados}</td><td>${team.empatados}</td><td>${team.perdidos}</td><td>${team.gf}</td><td>${team.gc}</td><td>${team.gf - team.gc}</td><td>${team.pts}</td>`
-      : `<td>${team.pj}</td><td>${team.gf - team.gc}</td><td>${team.pts}</td>`;
-    const leaderBadge = index === 0 && team.pj > 0 ? `<span class="leader-badge">LÍDER</span>` : "";
-    return `<tr class="${classes}"><td>${index + 1}</td><td><span class="table-team-name">${escapeHTML(team.equipo)}${leaderBadge}</span></td>${cells}</tr>`;
-  };
-  if (homeBody) homeBody.innerHTML = standings.length ? standings.slice(0, 5).map((team, index) => row(team, index, false)).join("") : `<tr><td colspan="5" class="empty-state">Sin equipos publicados.</td></tr>`;
-  if (fullBody) fullBody.innerHTML = standings.length ? standings.map((team, index) => row(team, index, true)).join("") : `<tr><td colspan="10" class="empty-state">Sin equipos publicados.</td></tr>`;
-};
-
-const renderScorers = (matches) => {
-  const scorers = calculateScorers(matches);
+const renderScorers = (matches, players) => {
+  const playerGoals = calculatePlayerGoals(players, matches);
+  const rosterScorers = players
+    .filter((player) => playerGoals.get(player.nombre) > 0)
+    .map((player) => ({ jugador: player.nombre, goles: playerGoals.get(player.nombre), player }));
+  const unmatchedScorers = calculateScorers(matches)
+    .filter((scorer) => !findPlayer(players, scorer.jugador))
+    .map((scorer) => ({ ...scorer, player: { nombre: scorer.jugador } }));
+  const scorers = [...rosterScorers, ...unmatchedScorers]
+    .sort((first, second) => second.goles - first.goles || first.jugador.localeCompare(second.jugador, "es"));
   const rowMarkup = scorers.length
-    ? scorers.map((scorer, index) => `<tr><td>${index + 1}</td><td>${escapeHTML(scorer.jugador)}</td><td>${scorer.goles}</td></tr>`).join("")
+    ? scorers.map((scorer, index) => `<tr class="scorer-row"><td class="scorer-rank">${index + 1}</td><td><span class="player-name scorer-player">${playerAvatar(scorer.player)}<span>${escapeHTML(scorer.jugador)}</span></span></td><td class="scorer-goals"><strong>${scorer.goles}</strong></td></tr>`).join("")
     : `<tr><td colspan="3" class="empty-state">Sin goles registrados.</td></tr>`;
   ["#scorers-table", "#home-scorers"].forEach((selector) => {
     const target = document.querySelector(selector);
-    if (target) target.innerHTML = rowMarkup;
+    if (!target) return;
+    target.innerHTML = rowMarkup;
+    target.querySelectorAll(".player-photo").forEach((image) => image.addEventListener("error", () => image.classList.add("is-hidden"), { once: true }));
   });
 };
 
 const animateCounters = (matches, clubName) => {
   const finished = completedMatches(matches);
-  const totals = { played: 0, wins: 0, goals: 0 };
+  const totals = { played: 0, goals: 0 };
   for (const match of finished) {
     const atHome = sameTeam(match.local, clubName);
     const away = sameTeam(match.visitante, clubName);
     if (!atHome && !away) continue;
     const clubGoals = Number(atHome ? match.golesLocal : match.golesVisitante);
-    const rivalGoals = Number(atHome ? match.golesVisitante : match.golesLocal);
     totals.played += 1;
     totals.goals += clubGoals;
-    if (clubGoals > rivalGoals) totals.wins += 1;
   }
+  const elements = [...document.querySelectorAll("[data-counter]")];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  document.querySelectorAll("[data-counter]").forEach((element) => {
+  elements.forEach((element) => {
     const total = totals[element.dataset.counter] || 0;
-    if (reducedMotion || total === 0) { element.textContent = String(total); return; }
-    const start = performance.now();
-    const duration = 850;
-    const tick = (now) => {
-      const progress = Math.min((now - start) / duration, 1);
-      element.textContent = String(Math.round(total * (1 - (1 - progress) ** 3)));
-      if (progress < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
+    element.dataset.target = String(total);
+    element.textContent = String(reducedMotion || !total ? total : 0);
   });
+  if (reducedMotion || !("IntersectionObserver" in window)) return;
+
+  const frames = new Map();
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      const element = entry.target;
+      const total = Number(element.dataset.target);
+      if (!entry.isIntersecting) {
+        cancelAnimationFrame(frames.get(element));
+        frames.delete(element);
+        element.textContent = "0";
+        continue;
+      }
+      if (!total) continue;
+      const start = performance.now();
+      const tick = (now) => {
+        const progress = Math.min((now - start) / 850, 1);
+        element.textContent = String(Math.round(total * (1 - (1 - progress) ** 3)));
+        if (progress < 1) frames.set(element, requestAnimationFrame(tick));
+        else frames.delete(element);
+      };
+      frames.set(element, requestAnimationFrame(tick));
+    }
+  }, { threshold: 0.6 });
+  elements.forEach((element) => observer.observe(element));
 };
 
 const initials = (name) => String(name || "").trim().split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join("").toLocaleUpperCase("es");
@@ -187,21 +164,8 @@ const renderRoster = (players, matches) => {
   const playerGoals = calculatePlayerGoals(players, matches);
   const ordered = [...players].sort((first, second) => asNumber(first.dorsal) - asNumber(second.dorsal));
   target.innerHTML = ordered.length ? ordered.map((player) => `<tr>
-    <td>${asNumber(player.dorsal) || "—"}</td><td><span class="player-name">${playerAvatar(player)}<span>${escapeHTML(player.nombre)}</span></span></td><td>${escapeHTML(player.posicion)}</td>
-    <td>${displayStat(player.partidosJugados)}</td><td>${displayStat(playerGoals.get(player.nombre))}</td><td>${displayStat(player.asistencias)}</td><td>${displayStat(player.tarjetasAmarillas)}</td><td>${displayStat(player.tarjetasRojas)}</td>
-  </tr>`).join("") : `<tr><td colspan="8" class="empty-state">Sin jugadores publicados.</td></tr>`;
-  target.querySelectorAll(".player-photo").forEach((image) => image.addEventListener("error", () => image.classList.add("is-hidden"), { once: true }));
-};
-
-const renderPlayerStats = (players, matches, sortBy = "goles") => {
-  const target = document.querySelector("#player-stats-table");
-  if (!target) return;
-  const playerGoals = calculatePlayerGoals(players, matches);
-  const statValue = (player, key) => key === "goles" ? playerGoals.get(player.nombre) : player[key];
-  const ordered = [...players].sort((first, second) => asNumber(statValue(second, sortBy)) - asNumber(statValue(first, sortBy)) || first.nombre.localeCompare(second.nombre, "es"));
-  target.innerHTML = ordered.length ? ordered.map((player) => `<tr>
-    <td><span class="player-name">${playerAvatar(player)}<span>${escapeHTML(player.nombre)}</span></span></td><td>${displayStat(player.partidosJugados)}</td><td>${displayStat(playerGoals.get(player.nombre))}</td><td>${displayStat(player.asistencias)}</td><td>${displayStat(player.tarjetasAmarillas)}</td><td>${displayStat(player.tarjetasRojas)}</td>
-  </tr>`).join("") : `<tr><td colspan="6" class="empty-state">Sin estadísticas individuales publicadas.</td></tr>`;
+    <td>${player.dorsal === null || player.dorsal === undefined ? "—" : asNumber(player.dorsal)}</td><td><span class="player-name">${playerAvatar(player)}<span>${escapeHTML(player.nombre)}</span></span></td><td>${escapeHTML(player.posicion)}</td><td>${displayStat(playerGoals.get(player.nombre))}</td>
+  </tr>`).join("") : `<tr><td colspan="4" class="empty-state">Sin jugadores publicados.</td></tr>`;
   target.querySelectorAll(".player-photo").forEach((image) => image.addEventListener("error", () => image.classList.add("is-hidden"), { once: true }));
 };
 
@@ -212,7 +176,7 @@ const renderCalendar = (matches, clubName) => {
   target.innerHTML = ordered.length ? ordered.map((match) => matchCard(match, clubName)).join("") : `<p class="empty-state">Sin partidos publicados.</p>`;
 };
 
-const renderHome = (matches, teamNames, site) => {
+const renderHome = (matches, players, site) => {
   const upcoming = matches.filter((match) => match.estado === "programado").sort((first, second) => matchTime(first) - matchTime(second));
   const next = upcoming.find((match) => matchTime(match) >= Date.now()) || upcoming[0];
   const latest = completedMatches(matches).sort((first, second) => matchTime(second) - matchTime(first))[0];
@@ -222,8 +186,7 @@ const renderHome = (matches, teamNames, site) => {
   if (latestTarget) latestTarget.innerHTML = latest ? matchCard(latest, site.nombre) : `<p class="empty-state">Sin resultados publicados.</p>`;
   const season = document.querySelector("#season-label");
   if (season) season.textContent = `${site.institucion} · ${site.temporada}`.toLocaleUpperCase("es");
-  renderStandings(matches, teamNames);
-  renderScorers(matches);
+  renderScorers(matches, players);
   animateCounters(matches, site.nombre);
 };
 
@@ -264,7 +227,6 @@ const setupInteractions = () => {
       });
     });
   });
-  document.querySelector("#stats-sort")?.addEventListener("change", (event) => renderPlayerStats(currentPlayers, currentMatches, event.target.value));
 };
 
 const setupReveals = () => {
@@ -288,22 +250,18 @@ const start = async () => {
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("/js/sw.js").catch(() => {});
 
   try {
-    const paths = ["/content/partidos.json", "/content/plantel.json", "/content/equipos.json", "/content/site.json"];
+    const paths = ["/content/partidos.json", "/content/plantel.json", "/content/site.json"];
     const responses = await Promise.all(paths.map((path) => fetch(path)));
     if (responses.some((response) => !response.ok)) throw new Error("No fue posible leer los archivos de contenido.");
-    const [matchData, rosterData, teamsData, site] = await Promise.all(responses.map((response) => response.json()));
+    const [matchData, rosterData, site] = await Promise.all(responses.map((response) => response.json()));
     currentMatches = Array.isArray(matchData.partidos) ? matchData.partidos : [];
     currentPlayers = Array.isArray(rosterData.jugadores) ? rosterData.jugadores : [];
-    currentTeams = Array.isArray(teamsData.equipos) ? teamsData.equipos : [site.nombre || CLUB_NAME];
-    if (!currentTeams.some((team) => sameTeam(team, site.nombre))) currentTeams.unshift(site.nombre || CLUB_NAME);
     applyBranding(site);
 
-    if (PAGE === "inicio") renderHome(currentMatches, currentTeams, site);
+    if (PAGE === "inicio") renderHome(currentMatches, currentPlayers, site);
     if (PAGE === "calendario") renderCalendar(currentMatches, site.nombre);
     if (PAGE === "estadisticas") {
-      renderStandings(currentMatches, currentTeams);
-      renderScorers(currentMatches);
-      renderPlayerStats(currentPlayers, currentMatches);
+      renderScorers(currentMatches, currentPlayers);
     }
     if (PAGE === "plantel") renderRoster(currentPlayers, currentMatches);
   } catch {

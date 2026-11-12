@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Goleadores y Estadísticas | CJ Prom 07</title>
-  <meta name="description" content="Tabla de posiciones y goleadores de CJ Prom 07, calculados desde los resultados publicados.">
+  <title>Goleadores | CJ Prom 07</title>
+  <meta name="description" content="Goleadores de CJ Prom 07, calculados desde los resultados publicados.">
   <meta name="theme-color" content="#080B08">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Goleadores y Estadísticas | CJ Prom 07">
-  <meta property="og:description" content="Tabla de posiciones y goleadores calculados a partir de resultados publicados.">
+  <meta property="og:title" content="Goleadores | CJ Prom 07">
+  <meta property="og:description" content="Goleadores calculados a partir de los resultados publicados.">
   <meta name="twitter:card" content="summary">
   <link rel="canonical" href="https://cj-prom07fc.vercel.app/estadisticas.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
@@ -23,24 +26,16 @@
         <li><a href="/index.html">Inicio</a></li>
         <li><a href="/calendario.html">Calendario</a></li>
         <li><a href="/plantel.html">Plantel</a></li>
-        <li><a href="/estadisticas.html" class="active" aria-current="page">Estadísticas</a></li>
+        <li><a href="/estadisticas.html" class="active" aria-current="page">Goleadores</a></li>
       </ul></nav>
     </div>
   </header>
 
   <main id="contenido" data-view="estadisticas">
-    <section class="page-heading reveal"><p class="eyebrow">NÚMEROS DE LA TEMPORADA</p><h1>Estadísticas</h1><p class="subtitle">La tabla se calcula con marcadores publicados en el calendario.</p></section>
-    <section class="card reveal" aria-labelledby="standings-title">
-      <div class="section-heading"><div><p class="eyebrow">COMPETICIÓN</p><h2 id="standings-title">Tabla de posiciones</h2></div><span class="table-note">3 pts · victoria &nbsp; 1 pt · empate</span></div>
-      <div class="table-scroll"><table><thead><tr><th scope="col">Pos.</th><th scope="col">Equipo</th><th scope="col">PJ</th><th scope="col">PG</th><th scope="col">PE</th><th scope="col">PP</th><th scope="col">GF</th><th scope="col">GC</th><th scope="col">DG</th><th scope="col">Pts.</th></tr></thead><tbody id="standings-table"><tr><td colspan="10" class="empty-state">Sin resultados publicados.</td></tr></tbody></table></div>
-    </section>
+    <section class="page-heading reveal"><p class="eyebrow">GOLES EN COMPETICIÓN</p><h1>Goleadores</h1><p class="subtitle">Los goles individuales se actualizan con los resultados publicados.</p></section>
     <section class="card reveal" aria-labelledby="scorers-title">
-      <div class="section-heading"><div><p class="eyebrow">GOLES EN COMPETICIÓN</p><h2 id="scorers-title">Goleadores</h2></div></div>
-      <div class="table-scroll"><table><thead><tr><th scope="col">Pos.</th><th scope="col">Jugador</th><th scope="col">Goles</th></tr></thead><tbody id="scorers-table"><tr><td colspan="3" class="empty-state">Sin goles registrados.</td></tr></tbody></table></div>
-    </section>
-    <section class="card reveal" aria-labelledby="player-stats-title">
-      <div class="section-heading"><div><p class="eyebrow">PLANTEL</p><h2 id="player-stats-title">Rendimiento individual</h2></div><label class="sort-control" for="stats-sort">Ordenar por <select id="stats-sort"><option value="goles">Goles</option><option value="asistencias">Asistencias</option><option value="partidosJugados">Partidos</option><option value="tarjetasAmarillas">Amarillas</option><option value="tarjetasRojas">Rojas</option></select></label></div>
-      <div class="table-scroll"><table><thead><tr><th scope="col">Jugador</th><th scope="col">PJ</th><th scope="col">Goles</th><th scope="col">Asist.</th><th scope="col">TA</th><th scope="col">TR</th></tr></thead><tbody id="player-stats-table"><tr><td colspan="6" class="empty-state">Sin estadísticas individuales publicadas.</td></tr></tbody></table></div>
+      <div class="section-heading"><div><p class="eyebrow">TEMPORADA 2026</p><h2 id="scorers-title">Tabla de goleadores</h2></div></div>
+      <div class="table-scroll scorers-table-wrap"><table class="scorers-table"><thead><tr><th scope="col">Pos.</th><th scope="col">Jugador</th><th scope="col">Goles</th></tr></thead><tbody id="scorers-table"><tr><td colspan="3" class="empty-state">Sin goles registrados.</td></tr></tbody></table></div>
     </section>
   </main>
 

@@ -5,12 +5,11 @@ Web del equipo de fútbol de exalumnos del Colegio Javier. Las páginas consumen
 ## Datos deportivos
 
 - `content/partidos.json` es la fuente del calendario y los resultados. Cada partido finalizado debe incluir los dos marcadores; las fechas se guardan en formato ISO con la hora de Panamá.
-- `content/plantel.json` contiene el plantel, las fotografías opcionales y sus estadísticas individuales. Si falta una imagen, se muestran las iniciales del jugador.
-- `content/equipos.json` mantiene los equipos participantes para que la tabla incluya también equipos que aún no tengan resultados.
+- `content/partidos.json` usa **Cancha del Colegio Javier** como sede predeterminada.
+- `content/plantel.json` contiene el plantel y las fotografías opcionales. Si falta una imagen, se muestran las iniciales del jugador.
 - `content/site.json` contiene la identidad del club y el logo opcional.
-- La tabla se calcula con los partidos finalizados usando 3 puntos por victoria, 1 por empate y 0 por derrota. El orden de desempate es puntos, diferencia de goles, goles a favor y nombre del equipo.
-- Los goleadores y los goles mostrados en el plantel se calculan sumando el campo `goleadores` de cada partido finalizado. Registrar ahí únicamente a los jugadores de CJ Prom 07; el nombre del goleador puede ser su nombre completo o un apellido único del plantel.
-- `content/equipos.json` enumera todos los equipos participantes, incluso los que aún no tengan resultados. La etiqueta `PROM 07` se reconoce como el mismo equipo que `CJ Prom 07`.
+- La tabla de posiciones no se calcula ni se publica.
+- Los goles mostrados en el plantel y en la tabla de goleadores se calculan sumando el campo `goleadores` de cada partido finalizado. Registrar ahí únicamente a los jugadores de CJ Prom 07. Se acepta el nombre completo o un apellido único del plantel.
 
 ## Panel editorial
 

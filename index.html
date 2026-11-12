@@ -11,6 +11,9 @@
   <meta property="og:description" content="Calendario, resultados, plantel y estadísticas de CJ Prom 07.">
   <meta name="twitter:card" content="summary">
   <link rel="canonical" href="https://cj-prom07fc.vercel.app/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
@@ -24,7 +27,7 @@
         <li><a href="/index.html" class="active" aria-current="page">Inicio</a></li>
         <li><a href="/calendario.html">Calendario</a></li>
         <li><a href="/plantel.html">Plantel</a></li>
-        <li><a href="/estadisticas.html">Estadísticas</a></li>
+        <li><a href="/estadisticas.html">Goleadores</a></li>
       </ul>
       </nav>
     </div>
@@ -38,18 +41,11 @@
         <p class="hero-description">CJ Prom 07. El mismo equipo, una nueva historia en la cancha.</p>
         <a class="button-link" href="/calendario.html">Ver calendario <span aria-hidden="true">↗</span></a>
       </div>
-      <div class="hero-score" aria-label="Indicadores de temporada">
-        <span class="hero-score-label">TEMPORADA</span>
-        <strong>07</strong>
-        <span class="hero-score-rule"></span>
-        <span class="hero-score-foot">UNA PROMOCIÓN<br>UN SOLO EQUIPO</span>
-      </div>
       <span class="hero-watermark" aria-hidden="true">CJ</span>
     </section>
 
     <section class="metric-strip" aria-label="Resumen de temporada">
       <article class="metric reveal"><span class="metric-label">PARTIDOS</span><strong class="metric-value" data-counter="played">0</strong><span class="metric-note">jugados</span></article>
-      <article class="metric reveal"><span class="metric-label">VICTORIAS</span><strong class="metric-value" data-counter="wins">0</strong><span class="metric-note">en la temporada</span></article>
       <article class="metric reveal"><span class="metric-label">GOLES</span><strong class="metric-value" data-counter="goals">0</strong><span class="metric-note">a favor</span></article>
     </section>
 
@@ -58,14 +54,9 @@
       <section class="card reveal" aria-labelledby="latest-title"><div class="section-heading"><div><p class="eyebrow">ÚLTIMA JORNADA</p><h2 id="latest-title">Marcador final</h2></div><span class="section-index">02</span></div><div id="latest-result" aria-live="polite"><p class="empty-state">Sin resultados publicados.</p></div></section>
     </div>
 
-    <section class="card reveal" aria-labelledby="standings-title">
-      <div class="section-heading"><div><p class="eyebrow">COMPETICIÓN</p><h2 id="standings-title">Tabla de posiciones</h2></div><a class="text-link" href="/estadisticas.html">Tabla completa <span aria-hidden="true">↗</span></a></div>
-      <div class="table-scroll"><table><thead><tr><th scope="col">Pos.</th><th scope="col">Equipo</th><th scope="col">PJ</th><th scope="col">DG</th><th scope="col">Pts.</th></tr></thead><tbody id="home-standings"><tr><td colspan="5" class="empty-state">Sin resultados publicados.</td></tr></tbody></table></div>
-    </section>
-
     <section class="card reveal" aria-labelledby="home-scorers-title">
-      <div class="section-heading"><div><p class="eyebrow">RENDIMIENTO</p><h2 id="home-scorers-title">Goleadores</h2></div><a class="text-link" href="/estadisticas.html">Ver estadísticas <span aria-hidden="true">↗</span></a></div>
-      <div class="table-scroll"><table><thead><tr><th scope="col">Pos.</th><th scope="col">Jugador</th><th scope="col">Goles</th></tr></thead><tbody id="home-scorers"><tr><td colspan="3" class="empty-state">Sin goles registrados.</td></tr></tbody></table></div>
+      <div class="section-heading"><div><p class="eyebrow">RENDIMIENTO</p><h2 id="home-scorers-title">Goleadores</h2></div><a class="text-link" href="/estadisticas.html">Ver goleadores <span aria-hidden="true">↗</span></a></div>
+      <div class="table-scroll scorers-table-wrap"><table class="scorers-table"><thead><tr><th scope="col">Pos.</th><th scope="col">Jugador</th><th scope="col">Goles</th></tr></thead><tbody id="home-scorers"><tr><td colspan="3" class="empty-state">Sin goles registrados.</td></tr></tbody></table></div>
     </section>
   </main>
 
