@@ -9,7 +9,7 @@
   --text-secondary: #A7ADA5;
   --success: #B5E4A5;
   --danger: #FF9B8F;
-  --font-sans: 'Manrope', 'Segoe UI', sans-serif;
+  --font-sans: 'Montserrat', 'Segoe UI', sans-serif;
   --font-display: 'Barlow Condensed', 'Arial Narrow', Impact, sans-serif;
 }
 
@@ -23,6 +23,7 @@ html {
   font-size: 100%;
   color-scheme: dark;
   scroll-behavior: smooth;
+  overscroll-behavior-x: none;
 }
 
 body {
@@ -643,4 +644,153 @@ footer a { color: var(--accent); }
 
 @media (prefers-reduced-motion: reduce) {
   .motion-ready .reveal { opacity: 1; transform: none; }
+}
+
+.footer-install {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0.75rem 0.5rem 0;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  cursor: pointer;
+}
+
+.footer-install:hover { border-color: var(--accent); color: var(--accent); }
+
+.roster-table-wrap table,
+.scorers-table-wrap table {
+  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+}
+
+.roster-table th,
+.roster-table td,
+.scorers-table th,
+.scorers-table td {
+  padding: clamp(0.55rem, 1.5vw, 0.9rem) clamp(0.4rem, 1.8vw, 1rem);
+  font-size: clamp(1rem, 0.94rem + 0.25vw, 1.125rem);
+  overflow-wrap: anywhere;
+}
+
+.roster-table th:first-child,
+.roster-table td:first-child { width: clamp(2.75rem, 12vw, 4rem); }
+.roster-table th:last-child,
+.roster-table td:last-child { width: clamp(5.5rem, 23vw, 8rem); }
+.roster-table .player-name { min-width: 0; gap: clamp(0.4rem, 1.4vw, 0.75rem); }
+.roster-table .player-name > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+.roster-table .player-avatar { width: clamp(2rem, 8vw, 2.75rem); height: clamp(2rem, 8vw, 2.75rem); flex-basis: clamp(2rem, 8vw, 2.75rem); }
+.roster-table .player-open {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: inherit;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+.roster-table .player-open:hover { color: var(--accent); }
+.roster-table-wrap { overflow-x: hidden; }
+
+.scorers-table th:first-child,
+.scorers-table td:first-child { width: clamp(2.75rem, 12vw, 4rem); }
+.scorers-table th:last-child,
+.scorers-table td:last-child { width: clamp(3.75rem, 16vw, 5rem); }
+.scorers-table .scorer-player { min-width: 0; }
+.scorers-table .scorer-player > span:last-child { min-width: 0; white-space: normal; overflow-wrap: anywhere; }
+.scorers-table .player-avatar { width: clamp(2rem, 7vw, 2.5rem); height: clamp(2rem, 7vw, 2.5rem); flex-basis: clamp(2rem, 7vw, 2.5rem); }
+.scorers-table-wrap { width: 100%; overflow-x: hidden; }
+
+.match-info {
+  display: grid;
+  gap: 0.5rem;
+}
+.match-detail {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 0.65rem;
+  overflow-wrap: anywhere;
+  font-size: clamp(1rem, 0.94rem + 0.25vw, 1.125rem);
+}
+.match-detail svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 1.25rem;
+  margin-top: 0.2rem;
+  color: var(--accent);
+}
+.match-actions { margin-top: 0.5rem; }
+.calendar-save {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.calendar-save:hover { border-color: var(--accent); color: var(--accent); }
+
+.player-dialog,
+.install-dialog {
+  width: min(100% - 2rem, 30rem);
+  max-height: min(85dvh, 42rem);
+  margin: auto;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.65);
+}
+.player-dialog::backdrop,
+.install-dialog::backdrop { background: rgba(0, 0, 0, 0.76); backdrop-filter: blur(5px); }
+.dialog-close {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.dialog-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.player-profile { display: grid; justify-items: center; gap: 1rem; padding: 1rem 0; text-align: center; }
+.player-profile .player-avatar { width: clamp(7rem, 30vw, 10rem); height: clamp(7rem, 30vw, 10rem); font-size: clamp(2rem, 8vw, 3rem); }
+.player-profile h2 { overflow-wrap: anywhere; }
+.player-profile-meta { color: var(--text-secondary); font-size: 1rem; }
+.player-profile-goals { color: var(--accent); font-family: var(--font-display); font-size: clamp(2rem, 8vw, 3rem); font-weight: 700; }
+.player-profile-goals span { display: block; color: var(--text-secondary); font-family: var(--font-sans); font-size: 1rem; font-weight: 500; }
+.install-dialog p,
+.install-dialog li { font-size: clamp(1rem, 0.94rem + 0.25vw, 1.125rem); }
+.install-dialog ol { display: grid; gap: 0.5rem; margin: 1rem 0 1.5rem 1.25rem; }
+.install-dialog .button-link { margin-top: 0; border: 0; font: inherit; cursor: pointer; }
+.install-help { margin-top: 1rem; color: var(--text-secondary); }
+
+@media (display-mode: standalone) {
+  body { padding-bottom: env(safe-area-inset-bottom); }
+  header { padding-top: env(safe-area-inset-top); }
+}
+
+@media (max-width: 360px) {
+  .roster-table .player-avatar { display: none; }
+  .scorers-table .player-avatar { display: none; }
+  .table-scroll { border-radius: 2px; }
 }

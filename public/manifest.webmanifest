@@ -1,0 +1,21 @@
+{
+  "id": "/",
+  "name": "CJ07 App",
+  "short_name": "CJ07 App",
+  "description": "Calendario, resultados y plantel de CJ Prom 07.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#080B08",
+  "theme_color": "#080B08",
+  "icons": [
+    {
+      "src": "/assets/img/cj-prom-07-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

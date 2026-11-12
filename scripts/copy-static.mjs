@@ -11,3 +11,5 @@ for (const directory of ["css", "js", "content", "assets"]) {
     cpSync(source, resolve(output, directory), { recursive: true });
   }
 }
+
+cpSync(resolve(root, "js/sw.js"), resolve(output, "sw.js"));
