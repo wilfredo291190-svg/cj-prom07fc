@@ -2,8 +2,8 @@ backend:
   name: github
   repo: wilfredo291190-svg/cj-prom07fc
   branch: main
-  auth_type: pkce
-  app_id: CONFIGURAR_CLIENT_ID_OAUTH
+  base_url: https://cj-prom07fc.vercel.app
+  auth_endpoint: api/auth
 media_folder: assets/img
 public_folder: /assets/img
 collections:
@@ -57,3 +57,27 @@ collections:
               - { label: Dorsal, name: dorsal, widget: number, value_type: int, min: 0 }
               - { label: Posición, name: posicion, widget: string }
               - { label: Fotografía, name: imagen, widget: image, required: false }
+              - { label: Partidos jugados, name: partidosJugados, widget: number, value_type: int, min: 0, required: false }
+              - { label: Goles, name: goles, widget: number, value_type: int, min: 0, required: false }
+              - { label: Asistencias, name: asistencias, widget: number, value_type: int, min: 0, required: false }
+              - { label: Tarjetas amarillas, name: tarjetasAmarillas, widget: number, value_type: int, min: 0, required: false }
+              - { label: Tarjetas rojas, name: tarjetasRojas, widget: number, value_type: int, min: 0, required: false }
+  - name: configuracion
+    label: Configuración del club
+    files:
+      - name: identidad
+        label: Identidad y equipos
+        file: content/site.json
+        fields:
+          - { label: Nombre del equipo, name: nombre, widget: string }
+          - { label: Institución, name: institucion, widget: string }
+          - { label: Temporada, name: temporada, widget: string }
+          - { label: Logo SVG o imagen, name: logo, widget: image, required: false }
+      - name: equipos
+        label: Equipos de la tabla
+        file: content/equipos.json
+        fields:
+          - label: Equipos participantes
+            name: equipos
+            widget: list
+            field: { label: Equipo, name: equipo, widget: string }

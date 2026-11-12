@@ -5,49 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plantel | CJ Prom 07</title>
   <meta name="description" content="Plantel oficial de jugadores de CJ Prom 07.">
-  <meta name="theme-color" content="#0A0A0C">
+  <meta name="theme-color" content="#080B08">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Plantel | CJ Prom 07">
   <meta property="og:description" content="Nómina de jugadores del equipo CJ Prom 07.">
   <meta name="twitter:card" content="summary">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="canonical" href="https://cj-prom07fc.vercel.app/plantel.html">
+  <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header>
     <div class="nav-container">
-      <a href="index.html" class="brand">CJ PROM 07</a>
-      <nav aria-label="Navegación principal"><ul class="nav-links">
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="calendario.html">Calendario</a></li>
-        <li><a href="plantel.html" class="active" aria-current="page">Plantel</a></li>
-        <li><a href="estadisticas.html">Estadísticas</a></li>
+      <a href="/index.html" class="brand" aria-label="CJ Prom 07, inicio"><span class="brand-mark" aria-hidden="true">07</span><img class="brand-logo" alt="" hidden><span class="brand-name">CJ PROM 07</span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+      <nav id="primary-navigation" class="primary-navigation" aria-label="Navegación principal"><ul class="nav-links">
+        <li><a href="/index.html">Inicio</a></li>
+        <li><a href="/calendario.html">Calendario</a></li>
+        <li><a href="/plantel.html" class="active" aria-current="page">Plantel</a></li>
+        <li><a href="/estadisticas.html">Estadísticas</a></li>
       </ul></nav>
     </div>
   </header>
 
   <main id="contenido" data-view="plantel">
-    <h1>Plantel Oficial</h1>
-    <p class="subtitle">Nómina de jugadores del equipo.</p>
-    
-    <section class="card">
-      <h2>Jugadores Convocados</h2>
-      <div class="table-scroll"><table>
-        <thead>
-          <tr>
-            <th scope="col">Dorsal</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Posición</th>
-          </tr>
-        </thead>
-        <tbody id="roster-table"><tr><td colspan="3" class="empty-state">Cargando plantel...</td></tr></tbody>
-      </table></div>
+    <section class="page-heading reveal"><p class="eyebrow">UN SOLO EQUIPO</p><h1>Plantel</h1><p class="subtitle">La promoción que vuelve a encontrarse en la cancha.</p></section>
+    <section class="card reveal" aria-labelledby="roster-title">
+      <div class="section-heading"><div><p class="eyebrow">CJ PROM 07</p><h2 id="roster-title">Jugadores convocados</h2></div><span class="table-note">Temporada oficial</span></div>
+      <div class="table-scroll"><table><thead><tr><th scope="col">#</th><th scope="col">Jugador</th><th scope="col">Posición</th><th scope="col">PJ</th><th scope="col">G</th><th scope="col">A</th><th scope="col">TA</th><th scope="col">TR</th></tr></thead><tbody id="roster-table"><tr><td colspan="8" class="empty-state">Sin jugadores publicados.</td></tr></tbody></table></div>
     </section>
   </main>
 
   <footer>
     <p>&copy; 2026 CJ Prom 07 · Colegio Javier</p>
   </footer>
-  <script src="js/app.js"></script>
+  <script src="/js/app.js" defer></script>
 </body>
 </html>

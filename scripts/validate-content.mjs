@@ -3,9 +3,13 @@ import { readFile } from "node:fs/promises";
 const readJSON = async (path) => JSON.parse(await readFile(new URL(`../${path}`, import.meta.url), "utf8"));
 const matchesContent = await readJSON("content/partidos.json");
 const rosterContent = await readJSON("content/plantel.json");
+const teamsContent = await readJSON("content/equipos.json");
+const siteContent = await readJSON("content/site.json");
 
 if (!Array.isArray(matchesContent.partidos)) throw new Error("content/partidos.json debe contener un arreglo partidos.");
 if (!Array.isArray(rosterContent.jugadores)) throw new Error("content/plantel.json debe contener un arreglo jugadores.");
+if (!Array.isArray(teamsContent.equipos) || !teamsContent.equipos.includes(siteContent.nombre)) throw new Error("content/equipos.json debe incluir el equipo del club.");
+if (!siteContent.nombre?.trim() || !siteContent.institucion?.trim() || !siteContent.temporada?.trim()) throw new Error("content/site.json debe incluir nombre, institución y temporada.");
 
 for (const [index, match] of matchesContent.partidos.entries()) {
   const label = `Partido ${index + 1}`;
@@ -27,6 +31,17 @@ for (const [index, player] of rosterContent.jugadores.entries()) {
   if (!player.nombre?.trim() || !player.posicion?.trim() || !Number.isInteger(player.dorsal) || player.dorsal < 0) {
     throw new Error(`Jugador ${index + 1}: nombre, posición y dorsal válido son obligatorios.`);
   }
+  for (const stat of ["partidosJugados", "goles", "asistencias", "tarjetasAmarillas", "tarjetasRojas"]) {
+    if (player[stat] !== undefined && (!Number.isInteger(player[stat]) || player[stat] < 0)) {
+      throw new Error(`Jugador ${index + 1}: ${stat} debe ser un entero no negativo.`);
+    }
+  }
 }
 
-console.log(`Contenido válido: ${matchesContent.partidos.length} partidos y ${rosterContent.jugadores.length} jugadores.`);
+for (const [index, team] of teamsContent.equipos.entries()) {
+  if (typeof team !== "string" || !team.trim() || teamsContent.equipos.indexOf(team) !== index) {
+    throw new Error(`Equipo ${index + 1}: debe tener un nombre único.`);
+  }
+}
+
+console.log(`Contenido válido: ${matchesContent.partidos.length} partidos, ${rosterContent.jugadores.length} jugadores y ${teamsContent.equipos.length} equipos.`);

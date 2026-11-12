@@ -4,6 +4,10 @@
     { "source": "/robots.txt", "destination": "/api/robots" },
     { "source": "/sitemap.xml", "destination": "/api/sitemap" }
   ],
+  "functions": {
+    "api/auth.js": { "maxDuration": 10 },
+    "api/callback.js": { "maxDuration": 10 }
+  },
   "headers": [
     {
       "source": "/(.*)",

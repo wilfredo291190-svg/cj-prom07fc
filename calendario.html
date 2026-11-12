@@ -5,36 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calendario | CJ Prom 07</title>
   <meta name="description" content="Consulta las próximas jornadas y los resultados de CJ Prom 07.">
-  <meta name="theme-color" content="#0A0A0C">
+  <meta name="theme-color" content="#080B08">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Calendario | CJ Prom 07">
   <meta property="og:description" content="Partidos programados y resultados publicados de CJ Prom 07.">
   <meta name="twitter:card" content="summary">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="canonical" href="https://cj-prom07fc.vercel.app/calendario.html">
+  <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header>
     <div class="nav-container">
-      <a href="index.html" class="brand">CJ PROM 07</a>
-      <nav aria-label="Navegación principal"><ul class="nav-links">
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="calendario.html" class="active" aria-current="page">Calendario</a></li>
-        <li><a href="plantel.html">Plantel</a></li>
-        <li><a href="estadisticas.html">Estadísticas</a></li>
+      <a href="/index.html" class="brand" aria-label="CJ Prom 07, inicio"><span class="brand-mark" aria-hidden="true">07</span><img class="brand-logo" alt="" hidden><span class="brand-name">CJ PROM 07</span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+      <nav id="primary-navigation" class="primary-navigation" aria-label="Navegación principal"><ul class="nav-links">
+        <li><a href="/index.html">Inicio</a></li>
+        <li><a href="/calendario.html" class="active" aria-current="page">Calendario</a></li>
+        <li><a href="/plantel.html">Plantel</a></li>
+        <li><a href="/estadisticas.html">Estadísticas</a></li>
       </ul></nav>
     </div>
   </header>
 
   <main id="contenido" data-view="calendario">
-    <h1>Calendario de Partidos</h1>
-    <p class="subtitle">Partidos programados y resultados publicados.</p>
-    <div id="calendar-list" class="match-list" aria-live="polite"><p class="empty-state">Cargando calendario...</p></div>
+    <section class="page-heading reveal"><p class="eyebrow">TEMPORADA · CJ PROM 07</p><h1>Calendario</h1><p class="subtitle">Cada jornada, cada marcador, una sola camiseta.</p></section>
+    <div class="filter-bar reveal" role="group" aria-label="Filtrar partidos">
+      <button type="button" data-match-filter="todos" aria-pressed="true">Todos</button>
+      <button type="button" data-match-filter="programado" aria-pressed="false">Próximos</button>
+      <button type="button" data-match-filter="finalizado" aria-pressed="false">Jugados</button>
+    </div>
+    <div id="calendar-list" class="match-list" aria-live="polite"><p class="empty-state">Sin partidos publicados.</p></div>
   </main>
 
   <footer>
     <p>&copy; 2026 CJ Prom 07 · Colegio Javier</p>
   </footer>
-  <script src="js/app.js"></script>
+  <script src="/js/app.js" defer></script>
 </body>
 </html>
