@@ -1,0 +1,83 @@
+backend:
+  name: github
+  repo: wilfredo291190-svg/cj-prom07fc
+  branch: main
+  base_url: https://cj-prom07fc.vercel.app
+  auth_endpoint: api/auth
+media_folder: assets/img
+public_folder: /assets/img
+collections:
+  - name: torneo
+    label: Torneo
+    files:
+      - name: partidos
+        label: Calendario y resultados
+        file: content/partidos.json
+        fields:
+          - label: Partidos
+            name: partidos
+            widget: list
+            summary: "Jornada {{fields.jornada}} · {{fields.local}} vs {{fields.visitante}}"
+            fields:
+              - { label: Jornada, name: jornada, widget: number, value_type: int, min: 1 }
+              - { label: Fecha y hora, name: fecha, widget: datetime, date_format: "YYYY-MM-DD", time_format: "HH:mm", format: "YYYY-MM-DDTHH:mm:ssZ" }
+              - { label: Equipo local, name: local, widget: string }
+              - { label: Equipo visitante, name: visitante, widget: string }
+              - { label: Sede, name: sede, widget: string, required: false }
+              - label: Estado
+                name: estado
+                widget: select
+                default: programado
+                options:
+                  - { label: Programado, value: programado }
+                  - { label: Finalizado, value: finalizado }
+                  - { label: Suspendido, value: suspendido }
+              - { label: Goles del equipo local, name: golesLocal, widget: number, value_type: int, min: 0, required: false }
+              - { label: Goles del equipo visitante, name: golesVisitante, widget: number, value_type: int, min: 0, required: false }
+              - label: Goleadores de CJ Prom 07
+                name: goleadores
+                widget: list
+                required: false
+                fields:
+                  - { label: Jugador, name: jugador, widget: string }
+                  - { label: Goles en este partido, name: goles, widget: number, value_type: int, min: 1 }
+  - name: equipo
+    label: Equipo
+    files:
+      - name: plantel
+        label: Plantel
+        file: content/plantel.json
+        fields:
+          - label: Jugadores
+            name: jugadores
+            widget: list
+            summary: "{{fields.dorsal}} · {{fields.nombre}}"
+            fields:
+              - { label: Nombre, name: nombre, widget: string }
+              - { label: Dorsal, name: dorsal, widget: number, value_type: int, min: 0 }
+              - { label: Posición, name: posicion, widget: string }
+              - { label: Fotografía, name: imagen, widget: image, required: false }
+              - { label: Partidos jugados, name: partidosJugados, widget: number, value_type: int, min: 0, required: false }
+              - { label: Goles, name: goles, widget: number, value_type: int, min: 0, required: false }
+              - { label: Asistencias, name: asistencias, widget: number, value_type: int, min: 0, required: false }
+              - { label: Tarjetas amarillas, name: tarjetasAmarillas, widget: number, value_type: int, min: 0, required: false }
+              - { label: Tarjetas rojas, name: tarjetasRojas, widget: number, value_type: int, min: 0, required: false }
+  - name: configuracion
+    label: Configuración del club
+    files:
+      - name: identidad
+        label: Identidad y equipos
+        file: content/site.json
+        fields:
+          - { label: Nombre del equipo, name: nombre, widget: string }
+          - { label: Institución, name: institucion, widget: string }
+          - { label: Temporada, name: temporada, widget: string }
+          - { label: Logo SVG o imagen, name: logo, widget: image, required: false }
+      - name: equipos
+        label: Equipos de la tabla
+        file: content/equipos.json
+        fields:
+          - label: Equipos participantes
+            name: equipos
+            widget: list
+            field: { label: Equipo, name: equipo, widget: string }
