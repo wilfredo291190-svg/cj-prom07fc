@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "Sitio oficial del equipo de futbol CJ Prom 07 - Colegio Javier",
   "scripts": {
+    "build": "vite build && node scripts/copy-static.mjs",
     "dev": "npx serve",
     "lint": "node --check js/app.js && node --check js/sw.js && node --check api/robots.js && node --check api/sitemap.js && node --check api/auth.js && node --check api/callback.js && node scripts/validate-content.mjs"
   },
   "devDependencies": {
-    "serve": "^14.2.1"
+    "serve": "^14.2.1",
+    "vite": "^8.3.8"
   }
 }

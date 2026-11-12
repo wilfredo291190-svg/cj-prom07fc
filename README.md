@@ -31,7 +31,7 @@ El CMS publica cambios en la rama `main`. Tras conectar el repositorio a Vercel,
 
 ## Desarrollo y validación
 
-Requiere Node.js 20 o posterior.
+Requiere Node.js 20.19 o posterior.
 
 ```sh
 npm ci
@@ -43,6 +43,6 @@ La validación comprueba sintaxis JavaScript y estructura/valores de partidos y 
 
 ## Despliegue, SEO y notificaciones
 
-Conecta este repositorio a Vercel usando la configuración predeterminada para un sitio estático. `api/robots.js` y `api/sitemap.js` generan ambos recursos con el host real recibido por Vercel, sin fijar un dominio que aún no está definido.
+Vercel ejecuta `npm run build` y publica `dist/`. Vite compila las cuatro páginas HTML y conserva el panel `public/admin/`; el paso de copia añade CSS, JavaScript, contenido y recursos estáticos. Las funciones en `api/` se despliegan como funciones de Vercel. `api/robots.js` y `api/sitemap.js` generan ambos recursos con el host real recibido por Vercel, sin fijar un dominio que aún no está definido.
 
 El service worker puede recibir y mostrar un evento push, pero todavía no existe un emisor, una clave VAPID ni almacenamiento de suscripciones. Por tanto, las notificaciones push no están activas; hace falta configurar esos servicios antes de ofrecer una suscripción funcional. Tampoco se configuraron Google Analytics ni Search Console porque faltan el dominio definitivo, el identificador de medición y la verificación de propiedad.
