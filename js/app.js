@@ -11,12 +11,14 @@ const escapeHTML = (value) => String(value ?? "").replace(/[&<>"']/g, (character
 const asNumber = (value) => Number.isInteger(Number(value)) && Number(value) >= 0 ? Number(value) : 0;
 const displayStat = (value) => value === null || value === undefined ? "—" : asNumber(value);
 const validScore = (value) => value !== null && value !== undefined && value !== "" && Number.isInteger(Number(value)) && Number(value) >= 0;
-const sameTeam = (first, second) => String(first || "").trim().toLocaleLowerCase("es") === String(second || "").trim().toLocaleLowerCase("es");
+const normalizeName = (value) => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLocaleLowerCase("es");
+const normalizeTeamName = (value) => normalizeName(value).replace(/^cj\s+/, "");
+const sameTeam = (first, second) => normalizeTeamName(first) === normalizeTeamName(second);
 
 const formatDate = (value) => {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "Fecha por confirmar";
-  return new Intl.DateTimeFormat("es", { dateStyle: "full", timeStyle: "short" }).format(date);
+  return new Intl.DateTimeFormat("es", { dateStyle: "full", timeStyle: "short", timeZone: "America/Panama" }).format(date);
 };
 
 const matchTime = (match) => {
@@ -53,7 +55,8 @@ const matchCard = (match, clubName = CLUB_NAME) => {
 const calculateStandings = (matches, teamNames) => {
   const standings = new Map();
   const getTeam = (name) => {
-    const teamName = String(name || "").trim();
+    const rawName = String(name || "").trim();
+    const teamName = [...standings.keys()].find((existing) => sameTeam(existing, rawName)) || rawName;
     if (!standings.has(teamName)) standings.set(teamName, { equipo: teamName, pj: 0, ganados: 0, empatados: 0, perdidos: 0, gf: 0, gc: 0, pts: 0 });
     return standings.get(teamName);
   };
@@ -97,6 +100,18 @@ const calculateScorers = (matches) => {
   }
   return [...scorers.entries()].map(([jugador, goles]) => ({ jugador, goles }))
     .sort((first, second) => second.goles - first.goles || first.jugador.localeCompare(second.jugador, "es"));
+};
+
+const calculatePlayerGoals = (players, matches) => {
+  const totals = new Map(players.map((player) => [player.nombre, 0]));
+  for (const scorer of calculateScorers(matches)) {
+    const scorerName = normalizeName(scorer.jugador);
+    const exactMatch = players.find((player) => normalizeName(player.nombre) === scorerName);
+    const surnameMatches = players.filter((player) => normalizeName(player.nombre).endsWith(` ${scorerName}`));
+    const player = exactMatch || (surnameMatches.length === 1 ? surnameMatches[0] : null);
+    if (player) totals.set(player.nombre, (totals.get(player.nombre) || 0) + scorer.goles);
+  }
+  return totals;
 };
 
 const renderStandings = (matches, teamNames) => {
@@ -166,23 +181,26 @@ const playerAvatar = (player) => {
   return `<span class="player-avatar" aria-hidden="true"><span class="player-initials">${escapeHTML(initials(player.nombre))}</span>${source ? `<img class="player-photo" src="${escapeHTML(source)}" alt="" loading="lazy">` : ""}</span>`;
 };
 
-const renderRoster = (players) => {
+const renderRoster = (players, matches) => {
   const target = document.querySelector("#roster-table");
   if (!target) return;
+  const playerGoals = calculatePlayerGoals(players, matches);
   const ordered = [...players].sort((first, second) => asNumber(first.dorsal) - asNumber(second.dorsal));
   target.innerHTML = ordered.length ? ordered.map((player) => `<tr>
     <td>${asNumber(player.dorsal) || "—"}</td><td><span class="player-name">${playerAvatar(player)}<span>${escapeHTML(player.nombre)}</span></span></td><td>${escapeHTML(player.posicion)}</td>
-    <td>${displayStat(player.partidosJugados)}</td><td>${displayStat(player.goles)}</td><td>${displayStat(player.asistencias)}</td><td>${displayStat(player.tarjetasAmarillas)}</td><td>${displayStat(player.tarjetasRojas)}</td>
+    <td>${displayStat(player.partidosJugados)}</td><td>${displayStat(playerGoals.get(player.nombre))}</td><td>${displayStat(player.asistencias)}</td><td>${displayStat(player.tarjetasAmarillas)}</td><td>${displayStat(player.tarjetasRojas)}</td>
   </tr>`).join("") : `<tr><td colspan="8" class="empty-state">Sin jugadores publicados.</td></tr>`;
   target.querySelectorAll(".player-photo").forEach((image) => image.addEventListener("error", () => image.classList.add("is-hidden"), { once: true }));
 };
 
-const renderPlayerStats = (players, sortBy = "goles") => {
+const renderPlayerStats = (players, matches, sortBy = "goles") => {
   const target = document.querySelector("#player-stats-table");
   if (!target) return;
-  const ordered = [...players].sort((first, second) => asNumber(second[sortBy]) - asNumber(first[sortBy]) || first.nombre.localeCompare(second.nombre, "es"));
+  const playerGoals = calculatePlayerGoals(players, matches);
+  const statValue = (player, key) => key === "goles" ? playerGoals.get(player.nombre) : player[key];
+  const ordered = [...players].sort((first, second) => asNumber(statValue(second, sortBy)) - asNumber(statValue(first, sortBy)) || first.nombre.localeCompare(second.nombre, "es"));
   target.innerHTML = ordered.length ? ordered.map((player) => `<tr>
-    <td><span class="player-name">${playerAvatar(player)}<span>${escapeHTML(player.nombre)}</span></span></td><td>${displayStat(player.partidosJugados)}</td><td>${displayStat(player.goles)}</td><td>${displayStat(player.asistencias)}</td><td>${displayStat(player.tarjetasAmarillas)}</td><td>${displayStat(player.tarjetasRojas)}</td>
+    <td><span class="player-name">${playerAvatar(player)}<span>${escapeHTML(player.nombre)}</span></span></td><td>${displayStat(player.partidosJugados)}</td><td>${displayStat(playerGoals.get(player.nombre))}</td><td>${displayStat(player.asistencias)}</td><td>${displayStat(player.tarjetasAmarillas)}</td><td>${displayStat(player.tarjetasRojas)}</td>
   </tr>`).join("") : `<tr><td colspan="6" class="empty-state">Sin estadísticas individuales publicadas.</td></tr>`;
   target.querySelectorAll(".player-photo").forEach((image) => image.addEventListener("error", () => image.classList.add("is-hidden"), { once: true }));
 };
@@ -246,7 +264,7 @@ const setupInteractions = () => {
       });
     });
   });
-  document.querySelector("#stats-sort")?.addEventListener("change", (event) => renderPlayerStats(currentPlayers, event.target.value));
+  document.querySelector("#stats-sort")?.addEventListener("change", (event) => renderPlayerStats(currentPlayers, currentMatches, event.target.value));
 };
 
 const setupReveals = () => {
@@ -285,9 +303,9 @@ const start = async () => {
     if (PAGE === "estadisticas") {
       renderStandings(currentMatches, currentTeams);
       renderScorers(currentMatches);
-      renderPlayerStats(currentPlayers);
+      renderPlayerStats(currentPlayers, currentMatches);
     }
-    if (PAGE === "plantel") renderRoster(currentPlayers);
+    if (PAGE === "plantel") renderRoster(currentPlayers, currentMatches);
   } catch {
     document.querySelectorAll(".empty-state").forEach((element) => { element.textContent = "No se pudieron cargar los datos publicados."; });
   }

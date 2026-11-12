@@ -8,7 +8,10 @@ const siteContent = await readJSON("content/site.json");
 
 if (!Array.isArray(matchesContent.partidos)) throw new Error("content/partidos.json debe contener un arreglo partidos.");
 if (!Array.isArray(rosterContent.jugadores)) throw new Error("content/plantel.json debe contener un arreglo jugadores.");
-if (!Array.isArray(teamsContent.equipos) || !teamsContent.equipos.includes(siteContent.nombre)) throw new Error("content/equipos.json debe incluir el equipo del club.");
+const normalizeTeam = (name) => String(name || "").trim().toLocaleLowerCase("es").replace(/^cj\s+/, "");
+if (!Array.isArray(teamsContent.equipos) || !teamsContent.equipos.some((team) => normalizeTeam(team) === normalizeTeam(siteContent.nombre))) {
+  throw new Error("content/equipos.json debe incluir el equipo del club.");
+}
 if (!siteContent.nombre?.trim() || !siteContent.institucion?.trim() || !siteContent.temporada?.trim()) throw new Error("content/site.json debe incluir nombre, institución y temporada.");
 
 for (const [index, match] of matchesContent.partidos.entries()) {
