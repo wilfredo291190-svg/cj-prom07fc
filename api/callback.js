@@ -2,6 +2,7 @@ const crypto = require("node:crypto");
 
 const siteURL = "https://cj-prom07fc.vercel.app";
 const callbackURL = `${siteURL}/api/callback`;
+const tokenURL = "https://github.com/login/oauth/access_token";
 
 const readCookie = (request, name) => {
   const cookie = request.headers.cookie || "";
@@ -18,12 +19,7 @@ const equalState = (first, second) => {
   return left.length === right.length && crypto.timingSafeEqual(left, right);
 };
 
-const popupResponse = (response, error, token) => {
-  const event = error
-    ? `authorization:github:error:${JSON.stringify({ message: error })}`
-    : `authorization:github:success:${JSON.stringify({ token, provider: "github" })}`;
-  const safeEvent = JSON.stringify(event).replace(/</g, "\\u003c");
-
+const setPopupHeaders = (response) => {
   response.setHeader("Cache-Control", "no-store");
   response.setHeader("Content-Type", "text/html; charset=utf-8");
   response.setHeader(
@@ -31,13 +27,49 @@ const popupResponse = (response, error, token) => {
     "default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'none'; base-uri 'none'"
   );
   response.setHeader("X-Content-Type-Options", "nosniff");
+  response.setHeader("Referrer-Policy", "no-referrer");
   response.setHeader(
     "Set-Cookie",
     "cj_oauth_state=; Path=/api; Max-Age=0; HttpOnly; Secure; SameSite=Lax"
   );
+};
+
+const errorResponse = (response, error) => {
+  setPopupHeaders(response);
   return response
     .status(200)
-    .send(`<!doctype html><meta charset="utf-8"><title>GitHub OAuth</title><script>if(window.opener){window.opener.postMessage(${safeEvent},${JSON.stringify(siteURL)});}window.close();</script><p>Autenticación completada. Puedes cerrar esta ventana.</p>`);
+    .send(`<!doctype html><html lang="es"><meta charset="utf-8"><title>Error de autenticación</title><body><main><h1>No se pudo completar el inicio de sesión</h1><pre>${escapeHTML(error)}</pre><p>Puedes cerrar esta ventana después de revisar el error.</p></main></body></html>`);
+};
+
+const escapeHTML = (value) =>
+  String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+const successResponse = (response, token) => {
+  setPopupHeaders(response);
+  const safeToken = JSON.stringify(token).replace(/</g, "\\u003c");
+  const safeOrigin = JSON.stringify(siteURL);
+  return response.status(200).send(`<!doctype html><html lang="es"><meta charset="utf-8"><title>Autenticación completada</title><body><p id="status">Conectando con Decap CMS…</p><script>
+    const token = ${safeToken};
+    const origin = ${safeOrigin};
+    window.addEventListener("message", (event) => {
+      if (event.origin !== origin || event.source !== window.opener || event.data !== "authorizing:github") return;
+      window.opener.postMessage(
+        "authorization:github:success:" + JSON.stringify({ token, provider: "github" }),
+        origin
+      );
+      window.close();
+    });
+    if (window.opener) {
+      window.opener.postMessage("authorizing:github", origin);
+    } else {
+      document.getElementById("status").textContent = "No se encontró la ventana del panel de administración.";
+    }
+  </script></body></html>`);
 };
 
 module.exports = async function callback(request, response) {
@@ -46,16 +78,24 @@ module.exports = async function callback(request, response) {
     return response.status(405).send("Method not allowed");
   }
 
-  const { code, state, error } = request.query || {};
+  const query = request.query || {};
+  const { code, state, error } = query;
   const savedState = readCookie(request, "cj_oauth_state");
-  if (error) return popupResponse(response, "Autorización cancelada en GitHub.");
+  if (error) {
+    return errorResponse(
+      response,
+      typeof query.error_description === "string"
+        ? query.error_description
+        : "Autorización cancelada en GitHub."
+    );
+  }
   if (
     typeof code !== "string" ||
     typeof state !== "string" ||
     !savedState ||
     !equalState(state, savedState)
   ) {
-    return popupResponse(
+    return errorResponse(
       response,
       "No se pudo validar la solicitud OAuth. Intenta iniciar sesión de nuevo."
     );
@@ -64,11 +104,11 @@ module.exports = async function callback(request, response) {
   const clientID = process.env.GITHUB_CLIENT_ID;
   const clientSecret = process.env.GITHUB_CLIENT_SECRET;
   if (!clientID || !clientSecret) {
-    return popupResponse(response, "OAuth no está configurado en el servidor.");
+    return errorResponse(response, "OAuth no está configurado en el servidor.");
   }
 
   try {
-    const tokenResponse = await fetch("https://github.com/login/oauth/access_token", {
+    const tokenResponse = await fetch(tokenURL, {
       method: "POST",
       headers: { Accept: "application/json", "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -78,12 +118,15 @@ module.exports = async function callback(request, response) {
         redirect_uri: callbackURL
       })
     });
-    const tokenData = await tokenResponse.json();
-    if (!tokenResponse.ok || !tokenData.access_token) {
-      return popupResponse(response, "GitHub no pudo completar la autenticación.");
+    const data = await tokenResponse.json();
+    if (!tokenResponse.ok || !data.access_token) {
+      return errorResponse(response, data.error_description || JSON.stringify(data));
     }
-    return popupResponse(response, null, tokenData.access_token);
-  } catch {
-    return popupResponse(response, "No fue posible conectar con GitHub. Intenta de nuevo.");
+    return successResponse(response, data.access_token);
+  } catch (error) {
+    return errorResponse(
+      response,
+      error instanceof Error ? error.message : "No fue posible conectar con GitHub."
+    );
   }
 };
