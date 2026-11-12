@@ -1,3 +1,15 @@
 {
-  "jugadores": []
+  "jugadores": [
+    {
+      "nombre": "Abraham Orsini",
+      "partidosJugados": "",
+      "goles": 0,
+      "imagen": "/assets/img/orsini.webp",
+      "dorsal": 94,
+      "tarjetasAmarillas": 0,
+      "asistencias": 0,
+      "tarjetasRojas": 0,
+      "posicion": "Portero"
+    }
+  ]
 }
