@@ -1,3 +1,28 @@
 {
-  "jugadores": []
+  "jugadores": [
+    { "nombre": "ABRAHAM ORSINI", "dorsal": 94, "posicion": "PT" },
+    { "nombre": "JOSE LUNA", "dorsal": 3, "posicion": "DF" },
+    { "nombre": "PABLO VIGIL", "dorsal": 4, "posicion": "DF" },
+    { "nombre": "DJANGO RODRIGUEZ", "dorsal": 5, "posicion": "DF" },
+    { "nombre": "JORGE AGUIRRE", "dorsal": 11, "posicion": "DF" },
+    { "nombre": "MARIO RODRIGUEZ", "dorsal": 13, "posicion": "DF" },
+    { "nombre": "ALBERTO FLETCHER", "dorsal": 22, "posicion": "DF" },
+    { "nombre": "ALCIDES CUEVAS", "dorsal": 27, "posicion": "DF" },
+    { "nombre": "ALEXANDER HIDALGO", "dorsal": 55, "posicion": "DF" },
+    { "nombre": "JAIME GUTIERREZ", "dorsal": 2, "posicion": "MC" },
+    { "nombre": "CLAUDIO POLO", "dorsal": 10, "posicion": "MC" },
+    { "nombre": "AGUSTIN ROYO", "dorsal": 12, "posicion": "MC" },
+    { "nombre": "DANILO MARTINEZ", "dorsal": 16, "posicion": "MC" },
+    { "nombre": "CARLOS MORALES", "dorsal": 23, "posicion": "MC" },
+    { "nombre": "KEVIN CASTILLO", "dorsal": 24, "posicion": "MC" },
+    { "nombre": "ADRIAN RUIDIAZ", "dorsal": 25, "posicion": "MC" },
+    { "nombre": "ANTONIO HERRERA", "dorsal": 30, "posicion": "MC" },
+    { "nombre": "JEAN CHO", "dorsal": 72, "posicion": "MC" },
+    { "nombre": "MANUEL VALLE", "dorsal": 99, "posicion": "MC" },
+    { "nombre": "EFRAIN RAMOS", "dorsal": 14, "posicion": "MC" },
+    { "nombre": "EDGAR CERRUD", "dorsal": 8, "posicion": "DL" },
+    { "nombre": "BENJAMIN JOHNSON", "dorsal": 21, "posicion": "DL" },
+    { "nombre": "ALEXIS CASTILLO", "dorsal": 77, "posicion": "DL" },
+    { "nombre": "AUGUSTO DIAZ", "dorsal": null, "posicion": "DT" }
+  ]
 }

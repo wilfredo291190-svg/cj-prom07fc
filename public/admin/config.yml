@@ -55,7 +55,7 @@ collections:
             summary: "{{fields.dorsal}} · {{fields.nombre}}"
             fields:
               - { label: Nombre, name: nombre, widget: string }
-              - { label: Dorsal, name: dorsal, widget: number, value_type: int, min: 0 }
+              - { label: Dorsal, name: dorsal, widget: number, value_type: int, min: 0, required: false }
               - { label: Posición, name: posicion, widget: string }
               - { label: Fotografía, name: imagen, widget: image, required: false }
               - { label: Partidos jugados, name: partidosJugados, widget: number, value_type: int, min: 0, required: false }

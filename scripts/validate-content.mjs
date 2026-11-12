@@ -28,8 +28,10 @@ for (const [index, match] of matchesContent.partidos.entries()) {
 }
 
 for (const [index, player] of rosterContent.jugadores.entries()) {
-  if (!player.nombre?.trim() || !player.posicion?.trim() || !Number.isInteger(player.dorsal) || player.dorsal < 0) {
-    throw new Error(`Jugador ${index + 1}: nombre, posición y dorsal válido son obligatorios.`);
+  const hasValidDorsal = player.dorsal === null || player.dorsal === undefined
+    || Number.isInteger(player.dorsal) && player.dorsal >= 0;
+  if (!player.nombre?.trim() || !player.posicion?.trim() || !hasValidDorsal) {
+    throw new Error(`Jugador ${index + 1}: nombre y posición son obligatorios; el dorsal debe ser un entero no negativo o estar vacío.`);
   }
   for (const stat of ["partidosJugados", "goles", "asistencias", "tarjetasAmarillas", "tarjetasRojas"]) {
     if (player[stat] !== undefined && (!Number.isInteger(player[stat]) || player[stat] < 0)) {

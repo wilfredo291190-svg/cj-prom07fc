@@ -9,6 +9,7 @@ const escapeHTML = (value) => String(value ?? "").replace(/[&<>"']/g, (character
 }[character]));
 
 const asNumber = (value) => Number.isInteger(Number(value)) && Number(value) >= 0 ? Number(value) : 0;
+const displayStat = (value) => value === null || value === undefined ? "—" : asNumber(value);
 const validScore = (value) => value !== null && value !== undefined && value !== "" && Number.isInteger(Number(value)) && Number(value) >= 0;
 const sameTeam = (first, second) => String(first || "").trim().toLocaleLowerCase("es") === String(second || "").trim().toLocaleLowerCase("es");
 
@@ -171,7 +172,7 @@ const renderRoster = (players) => {
   const ordered = [...players].sort((first, second) => asNumber(first.dorsal) - asNumber(second.dorsal));
   target.innerHTML = ordered.length ? ordered.map((player) => `<tr>
     <td>${asNumber(player.dorsal) || "—"}</td><td><span class="player-name">${playerAvatar(player)}<span>${escapeHTML(player.nombre)}</span></span></td><td>${escapeHTML(player.posicion)}</td>
-    <td>${asNumber(player.partidosJugados)}</td><td>${asNumber(player.goles)}</td><td>${asNumber(player.asistencias)}</td><td>${asNumber(player.tarjetasAmarillas)}</td><td>${asNumber(player.tarjetasRojas)}</td>
+    <td>${displayStat(player.partidosJugados)}</td><td>${displayStat(player.goles)}</td><td>${displayStat(player.asistencias)}</td><td>${displayStat(player.tarjetasAmarillas)}</td><td>${displayStat(player.tarjetasRojas)}</td>
   </tr>`).join("") : `<tr><td colspan="8" class="empty-state">Sin jugadores publicados.</td></tr>`;
   target.querySelectorAll(".player-photo").forEach((image) => image.addEventListener("error", () => image.classList.add("is-hidden"), { once: true }));
 };
@@ -181,7 +182,7 @@ const renderPlayerStats = (players, sortBy = "goles") => {
   if (!target) return;
   const ordered = [...players].sort((first, second) => asNumber(second[sortBy]) - asNumber(first[sortBy]) || first.nombre.localeCompare(second.nombre, "es"));
   target.innerHTML = ordered.length ? ordered.map((player) => `<tr>
-    <td><span class="player-name">${playerAvatar(player)}<span>${escapeHTML(player.nombre)}</span></span></td><td>${asNumber(player.partidosJugados)}</td><td>${asNumber(player.goles)}</td><td>${asNumber(player.asistencias)}</td><td>${asNumber(player.tarjetasAmarillas)}</td><td>${asNumber(player.tarjetasRojas)}</td>
+    <td><span class="player-name">${playerAvatar(player)}<span>${escapeHTML(player.nombre)}</span></span></td><td>${displayStat(player.partidosJugados)}</td><td>${displayStat(player.goles)}</td><td>${displayStat(player.asistencias)}</td><td>${displayStat(player.tarjetasAmarillas)}</td><td>${displayStat(player.tarjetasRojas)}</td>
   </tr>`).join("") : `<tr><td colspan="6" class="empty-state">Sin estadísticas individuales publicadas.</td></tr>`;
   target.querySelectorAll(".player-photo").forEach((image) => image.addEventListener("error", () => image.classList.add("is-hidden"), { once: true }));
 };
