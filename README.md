@@ -17,11 +17,11 @@ Los datos actuales están vacíos intencionalmente: no se cargaron los ejemplos 
 
 El sitio desplegado incluye el panel en `https://<dominio-del-sitio>/admin/`. Para habilitar el inicio de sesión:
 
-1. Crea una OAuth App en GitHub con `https://cj-prom07fc.vercel.app` como Homepage URL y `https://cj-prom07fc.vercel.app/api/callback` como Authorization callback URL.
-2. En la configuración del proyecto de Vercel, agrega `GITHUB_CLIENT_ID` con el valor `Ov23liUM0PdaEIUFZcit`, `GITHUB_CLIENT_SECRET` con el secreto vigente y `SITE_URL` (`https://cj-prom07fc.vercel.app`) en Production, luego vuelve a desplegar. No guardes el Client Secret en el repositorio.
+1. Decap CMS usa autenticación PKCE directa desde el navegador mediante la GitHub App `Ov23liUM0PdaEIUFZcit`; no requiere endpoints OAuth ni secretos en Vercel.
+2. Configura en la GitHub App la URL del sitio como homepage y la URL pública del panel `/admin/` como callback. Ambas deben coincidir con el dominio desplegado.
 3. La cuenta que inicia sesión necesita permiso de escritura en `wilfredo291190-svg/cj-prom07fc`.
 
-El Client ID se configura como variable de entorno porque el endpoint de inicio de sesión la comparte con la función callback. Si una credencial OAuth real se compartió en una conversación o en un commit, revócala y genera otra antes del despliegue.
+La configuración del backend se mantiene en `admin/config.yml` y `public/admin/config.yml`; ambas usan `auth_type: pkce`, el mismo `app_id`, repositorio y rama.
 
 ## Agregar el logo SVG
 
@@ -43,6 +43,6 @@ La validación comprueba sintaxis JavaScript y estructura/valores de partidos y 
 
 ## Despliegue, SEO y notificaciones
 
-Vercel ejecuta `npm run build` y publica `dist/`. Vite compila las cuatro páginas HTML y conserva el panel `public/admin/`; el paso de copia añade CSS, JavaScript, contenido y recursos estáticos. Las funciones en `api/` se despliegan como funciones de Vercel. `api/robots.js` y `api/sitemap.js` generan ambos recursos con el host real recibido por Vercel, sin fijar un dominio que aún no está definido.
+Vercel ejecuta `npm run build` y publica `dist/`. Vite compila las cuatro páginas HTML y conserva el panel `public/admin/`; el paso de copia añade CSS, JavaScript, contenido y recursos estáticos. Las funciones `api/robots.js` y `api/sitemap.js` generan ambos recursos con el host real recibido por Vercel, sin fijar un dominio que aún no está definido.
 
 El service worker puede recibir y mostrar un evento push, pero todavía no existe un emisor, una clave VAPID ni almacenamiento de suscripciones. Por tanto, las notificaciones push no están activas; hace falta configurar esos servicios antes de ofrecer una suscripción funcional. Tampoco se configuraron Google Analytics ni Search Console porque faltan el dominio definitivo, el identificador de medición y la verificación de propiedad.

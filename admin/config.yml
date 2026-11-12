@@ -2,8 +2,8 @@ backend:
   name: github
   repo: wilfredo291190-svg/cj-prom07fc
   branch: main
-  base_url: https://cj-prom07fc.vercel.app
-  auth_endpoint: api/auth
+  auth_type: pkce
+  app_id: Ov23liUM0PdaEIUFZcit
 media_folder: assets/img
 public_folder: /assets/img
 collections:
