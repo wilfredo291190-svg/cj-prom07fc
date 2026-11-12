@@ -17,11 +17,11 @@ Los datos actuales están vacíos intencionalmente: no se cargaron los ejemplos 
 
 El sitio desplegado incluye el panel en `https://<dominio-del-sitio>/admin/`. Para habilitar el inicio de sesión:
 
-1. Decap CMS usa autenticación PKCE directa desde el navegador mediante la GitHub App `Ov23liUM0PdaEIUFZcit`; no requiere endpoints OAuth ni secretos en Vercel.
-2. Configura en la GitHub App la URL del sitio como homepage y la URL pública del panel `/admin/` como callback. Ambas deben coincidir con el dominio desplegado.
+1. Configura una OAuth App de GitHub con `https://cj-prom07fc.vercel.app` como Homepage URL y `https://cj-prom07fc.vercel.app/api/callback` como Authorization callback URL.
+2. En la configuración del proyecto de Vercel, agrega `GITHUB_CLIENT_ID` y `GITHUB_CLIENT_SECRET` con las credenciales de esa OAuth App en Production y vuelve a desplegar. No guardes el Client Secret en el repositorio.
 3. La cuenta que inicia sesión necesita permiso de escritura en `wilfredo291190-svg/cj-prom07fc`.
 
-La configuración del backend se mantiene en `admin/config.yml` y `public/admin/config.yml`; ambas usan `auth_type: pkce`, el mismo `app_id`, repositorio y rama.
+La configuración del backend se mantiene en `admin/config.yml` y `public/admin/config.yml`. El inicio pasa por `api/auth.js` y `api/callback.js`; ambos secretos OAuth se leen exclusivamente desde variables de entorno de Vercel.
 
 ## Agregar el logo SVG
 
