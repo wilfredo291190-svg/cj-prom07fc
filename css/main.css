@@ -112,7 +112,7 @@ main {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding: clamp(2rem, 4vw, 4rem) 1.5rem;
+  padding: clamp(2rem, 4vw, 4rem) clamp(1rem, 4vw, 4rem);
 }
 
 h1 {
@@ -647,18 +647,26 @@ tbody td:first-child { color: var(--text-secondary); font-variant-numeric: tabul
 .player-avatar { background: rgba(255, 209, 3, 0.13); color: var(--accent); font-size: var(--type-small); font-weight: 800; }
 .player-photo { object-position: center; }
 
-.scorers-table-wrap { width: min(100%, 36rem); overflow-x: auto; }
-.scorers-table-wrap table { width: 100%; min-width: 0; table-layout: fixed; }
-.scorers-table th:first-child, .scorers-table td:first-child { width: 3rem; }
-.scorers-table th:last-child, .scorers-table td:last-child { width: 4.25rem; text-align: center; }
+.roster-table-wrap,
+.scorers-table-wrap { overflow-x: hidden; }
+.scorers-table-wrap { width: min(100%, 36rem); }
 .scorer-row:first-child { background: linear-gradient(90deg, rgba(255, 209, 3, 0.14), rgba(255, 209, 3, 0.025)); }
 .scorer-rank { color: var(--text-secondary); font-family: var(--font-display); font-size: var(--type-heading); font-weight: 700; }
 .scorer-row:first-child .scorer-rank { color: var(--accent); }
-.scorer-player { min-width: 0; }
-.scorer-player > span:last-child { flex: 0 0 auto; white-space: nowrap; }
-.scorer-player .player-avatar { width: 2.25rem; height: 2.25rem; flex-basis: 2.25rem; }
-.scorer-goals strong { display: inline-grid; min-width: 2.5rem; height: 2.5rem; place-items: center; border-radius: 50%; background: var(--accent); color: var(--bg-base); font-family: var(--font-display); font-size: var(--type-display); line-height: 1; }
-.roster-table-wrap table { min-width: 32rem; }
+.scorer-player { min-width: 0; width: 100%; }
+.scorer-player > span:last-child { min-width: 0; white-space: nowrap; }
+.scorer-goals strong {
+  display: inline-grid;
+  width: clamp(2rem, 10vw, 2.5rem);
+  height: clamp(2rem, 10vw, 2.5rem);
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg-base);
+  font-family: var(--font-display);
+  font-size: var(--type-display);
+  line-height: 1;
+}
 
 .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
 .filter-bar button, .sort-control select { min-height: 3rem; padding: 0.65rem 1rem; border: 1px solid var(--border-subtle); border-radius: 4px; background: var(--bg-card); color: var(--text-secondary); font: inherit; font-size: clamp(1rem, 0.94rem + 0.25vw, 1.125rem); cursor: pointer; }
@@ -683,7 +691,7 @@ footer a { color: var(--accent); }
   .hero { min-height: auto; align-items: flex-start; padding: 2rem 1.5rem; }
   .hero.has-hero-image { min-height: 30rem; }
   .grid-dashboard, .match-list { grid-template-columns: minmax(0, 1fr); }
-  .card { padding: 1.25rem; }
+  .card { padding: clamp(1rem, 4vw, 1.25rem); }
   .section-heading { align-items: flex-start; }
   .metric-strip { margin-bottom: 2rem; }
   .metric { grid-template-columns: 1fr; gap: 0.35rem; padding-inline: 0.8rem; }
@@ -691,6 +699,20 @@ footer a { color: var(--accent); }
 }
 
 @media (max-width: 440px) {
+  .player-data-table th,
+  .player-data-table td { padding-inline: clamp(0.2rem, 1vw, 0.4rem); }
+  .roster-table td:first-child { font-family: var(--font-display); }
+  .player-data-table .player-name { gap: clamp(0.25rem, 1.2vw, 0.375rem); }
+  .player-data-table .player-name > span:last-child {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 0.9rem + 0.35vw, 1.125rem);
+    letter-spacing: 0;
+  }
+  .scorer-goals strong {
+    width: clamp(2rem, 10vw, 2.5rem);
+    height: clamp(2rem, 10vw, 2.5rem);
+    font-size: clamp(1.25rem, 5vw, 1.75rem);
+  }
   .hero { display: block; }
   .hero-copy { padding-bottom: 3rem; }
   .section-heading { flex-direction: column; align-items: flex-start; }
@@ -721,35 +743,51 @@ footer a { color: var(--accent); }
 .footer-install[hidden] { display: none; }
 .footer-install:hover { border-color: var(--accent); color: var(--accent); }
 
-.roster-table-wrap table,
-.scorers-table-wrap table {
+.player-data-table {
   width: 100%;
   min-width: 0;
   table-layout: fixed;
 }
 
-.roster-table th,
-.roster-table td,
-.scorers-table th,
-.scorers-table td {
-  padding: clamp(0.55rem, 1.5vw, 0.9rem) clamp(0.4rem, 1.8vw, 1rem);
-  font-size: clamp(1rem, 0.94rem + 0.25vw, 1.125rem);
-  overflow-wrap: anywhere;
+.player-data-table th,
+.player-data-table td {
+  padding: clamp(0.4rem, 1.8vw, 0.75rem);
+  font-size: var(--type-body);
+  overflow-wrap: normal;
 }
 
-.roster-table th:first-child,
-.roster-table td:first-child { width: clamp(2.75rem, 12vw, 4rem); }
-.roster-table th:last-child,
-.roster-table td:last-child { width: clamp(5.5rem, 23vw, 8rem); }
-.roster-table .player-name { min-width: 0; gap: clamp(0.4rem, 1.4vw, 0.75rem); }
-.roster-table .player-name > span:last-child {
-  flex: 0 0 auto;
-  white-space: nowrap;
+.player-data-table th:first-child,
+.player-data-table td:first-child {
+  width: clamp(1.5rem, 7vw, 2.5rem);
 }
-.roster-table .player-avatar { width: clamp(2rem, 8vw, 2.75rem); height: clamp(2rem, 8vw, 2.75rem); flex-basis: clamp(2rem, 8vw, 2.75rem); }
-.roster-table .player-open {
+.player-data-table th:last-child,
+.player-data-table td:last-child {
+  width: clamp(2.75rem, 13vw, 4rem);
+  text-align: center;
+}
+
+.player-data-table .player-name {
   display: inline-flex;
   width: 100%;
+  min-width: 0;
+  align-items: center;
+  gap: clamp(0.25rem, 1.5vw, 0.625rem);
+  white-space: nowrap;
+}
+
+.player-data-table .player-name > span:last-child {
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.player-data-table .player-avatar {
+  width: clamp(1.75rem, 5vw, 2.5rem);
+  height: clamp(1.75rem, 5vw, 2.5rem);
+  flex: 0 0 clamp(1.75rem, 5vw, 2.5rem);
+}
+
+.roster-table .player-open {
+  display: inline-flex;
   max-width: 100%;
   min-width: 0;
   align-items: center;
@@ -761,19 +799,8 @@ footer a { color: var(--accent); }
   font: inherit;
   cursor: pointer;
 }
+
 .roster-table .player-open:hover { color: var(--accent); }
-.roster-table-wrap { overflow-x: hidden; }
-
-.scorers-table th:first-child,
-.scorers-table td:first-child { width: clamp(2.75rem, 12vw, 4rem); }
-.scorers-table th:last-child,
-.scorers-table td:last-child { width: clamp(3.75rem, 16vw, 5rem); }
-.scorers-table .scorer-player { min-width: 0; }
-.scorers-table .scorer-player > span:last-child { white-space: nowrap; }
-.scorers-table .player-avatar { width: clamp(2rem, 7vw, 2.5rem); height: clamp(2rem, 7vw, 2.5rem); flex-basis: clamp(2rem, 7vw, 2.5rem); }
-.scorers-table-wrap { width: 100%; overflow-x: hidden; }
-.roster-position-short { display: none; }
-
 .match-info {
   display: grid;
   gap: 0.5rem;
@@ -854,27 +881,4 @@ footer a { color: var(--accent); }
 @media (display-mode: standalone) {
   body { padding-bottom: env(safe-area-inset-bottom); }
   header { padding-top: env(safe-area-inset-top); }
-}
-
-@media (max-width: 407px) {
-  .roster-table-wrap table,
-  .scorers-table-wrap table { table-layout: auto; }
-  .roster-table th,
-  .roster-table td,
-  .scorers-table th,
-  .scorers-table td { padding-inline: clamp(0.125rem, 1vw, 0.25rem); }
-  .roster-table th:first-child,
-  .roster-table td:first-child,
-  .scorers-table th:first-child,
-  .scorers-table td:first-child { width: 1.75rem; }
-  .roster-table th:last-child,
-  .roster-table td:last-child { width: 2.5rem; }
-  .scorers-table th:last-child,
-  .scorers-table td:last-child { width: 3rem; }
-  .roster-position-full { display: none; }
-  .roster-position-short { display: inline; }
-  .roster-table .player-avatar { display: none; }
-  .scorers-table .player-avatar { display: none; }
-  .roster-table .player-open { width: auto; }
-  .table-scroll { border-radius: 2px; }
 }
