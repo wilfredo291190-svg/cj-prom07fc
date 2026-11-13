@@ -40,7 +40,14 @@ collections:
                 widget: list
                 required: false
                 fields:
-                  - { label: Jugador, name: jugador, widget: string }
+                  - label: Jugador
+                    name: jugador
+                    widget: relation
+                    collection: equipo
+                    file: plantel
+                    search_fields: ["jugadores.*.nombre", "jugadores.*.dorsal"]
+                    value_field: "jugadores.*.nombre"
+                    display_fields: ["jugadores.*.dorsal", "jugadores.*.nombre"]
                   - { label: Goles en este partido, name: goles, widget: number, value_type: int, min: 1 }
   - name: equipo
     label: Equipo

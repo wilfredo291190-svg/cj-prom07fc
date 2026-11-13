@@ -7,11 +7,11 @@
       "sede": "Cancha del Colegio Javier",
       "goleadores": [
         {
-          "jugador": "Valle",
+          "jugador": "MANUEL VALLE",
           "goles": 2
         },
         {
-          "jugador": "Royo",
+          "jugador": "AGUSTIN ROYO",
           "goles": 1
         }
       ],
@@ -27,7 +27,7 @@
       "sede": "Cancha del Colegio Javier",
       "goleadores": [
         {
-          "jugador": "Herrera",
+          "jugador": "ANTONIO HERRERA",
           "goles": 1
         }
       ],
@@ -43,7 +43,7 @@
       "sede": "Cancha del Colegio Javier",
       "goleadores": [
         {
-          "jugador": "Johnson",
+          "jugador": "BENJAMIN JOHNSON",
           "goles": 2
         }
       ],
@@ -70,11 +70,11 @@
       "sede": "Cancha del Colegio Javier",
       "goleadores": [
         {
-          "jugador": "Polo",
+          "jugador": "CLAUDIO POLO",
           "goles": 1
         },
         {
-          "jugador": "Cerrud",
+          "jugador": "EDGAR CERRUD",
           "goles": 1
         }
       ],
@@ -90,7 +90,7 @@
       "sede": "Cancha del Colegio Javier",
       "goleadores": [
         {
-          "jugador": "Johnson",
+          "jugador": "BENJAMIN JOHNSON",
           "goles": 1
         }
       ],

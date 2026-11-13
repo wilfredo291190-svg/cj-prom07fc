@@ -103,10 +103,56 @@ const calculateScorers = (matches) => {
 };
 
 const findPlayer = (players, name) => {
-  const scorerName = normalizeName(name);
-  const exactMatch = players.find((player) => normalizeName(player.nombre) === scorerName);
+  const rawName = String(name || "").trim();
+  const dorsalSuffix = rawName.match(/(?:\s*#\s*(\d+)|\s*\(\s*#?\s*(\d+)\s*\)|\s+(\d+))\s*$/);
+  const bareDorsal = /^\d+$/.test(rawName);
+  const dorsal = dorsalSuffix
+    ? dorsalSuffix[1] || dorsalSuffix[2] || dorsalSuffix[3]
+    : bareDorsal ? rawName : null;
+  const scorerName = normalizeName(dorsalSuffix ? rawName.slice(0, dorsalSuffix.index) : bareDorsal ? "" : rawName);
+  const unique = (matches) => matches.length === 1 ? matches[0] : null;
+
+  if (!scorerName) {
+    return dorsal ? unique(players.filter((player) => String(player.dorsal) === dorsal)) : null;
+  }
+
+  const exactMatches = players.filter((player) => normalizeName(player.nombre) === scorerName);
+  if (exactMatches.length) {
+    return unique(dorsal
+      ? exactMatches.filter((player) => String(player.dorsal) === dorsal)
+      : exactMatches);
+  }
+
   const surnameMatches = players.filter((player) => normalizeName(player.nombre).endsWith(` ${scorerName}`));
-  return exactMatch || (surnameMatches.length === 1 ? surnameMatches[0] : null);
+  if (surnameMatches.length) {
+    const match = unique(surnameMatches);
+    return match && (!dorsal || String(match.dorsal) === dorsal) ? match : null;
+  }
+
+  const initialSurname = scorerName.match(/^([a-zñ])\.?\s+(.+)$/);
+  if (initialSurname) {
+    const [, initial, surname] = initialSurname;
+    const matches = players.filter((player) => {
+      const playerName = normalizeName(player.nombre);
+      return playerName.startsWith(`${initial}`) && playerName.endsWith(` ${surname}`);
+    });
+    const match = unique(matches);
+    return match && (!dorsal || String(match.dorsal) === dorsal) ? match : null;
+  }
+
+  const nameInitial = scorerName.match(/^([a-zñ]+)\s+([a-zñ])\.?$/);
+  if (nameInitial) {
+    const [, firstName, initial] = nameInitial;
+    const matches = players.filter((player) => {
+      const playerName = normalizeName(player.nombre);
+      const nameParts = playerName.split(/\s+/);
+      return nameParts[0] === firstName && nameParts.at(-1).startsWith(initial);
+    });
+    const match = unique(matches);
+    return match && (!dorsal || String(match.dorsal) === dorsal) ? match : null;
+  }
+
+  return null;
 };
 
 const calculatePlayerGoals = (players, matches) => {
