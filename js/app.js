@@ -260,6 +260,8 @@ const renderHome = (matches, players, site) => {
 const applyBranding = (site) => {
   const brandName = document.querySelector(".brand-name");
   const logo = document.querySelector(".brand-logo");
+  const hero = document.querySelector(".hero");
+  const heroImage = document.querySelector("[data-hero-image]");
   if (brandName) brandName.textContent = String(site.nombre || CLUB_NAME).toLocaleUpperCase("es");
   const source = imageURL(site.logo);
   if (logo && source) {
@@ -267,6 +269,18 @@ const applyBranding = (site) => {
     logo.alt = `${site.nombre || CLUB_NAME} logo`;
     logo.hidden = false;
     logo.addEventListener("error", () => { logo.hidden = true; logo.removeAttribute("src"); }, { once: true });
+  }
+  const heroSource = imageURL(site.fotoHero);
+  if (hero && heroImage && heroSource) {
+    heroImage.src = heroSource;
+    heroImage.hidden = false;
+    hero.classList.add("has-hero-image");
+    heroImage.addEventListener("error", () => {
+      heroImage.hidden = true;
+      heroImage.removeAttribute("src");
+      hero.classList.remove("has-hero-image");
+      console.error("No se pudo cargar la foto del hero.");
+    }, { once: true });
   }
 };
 

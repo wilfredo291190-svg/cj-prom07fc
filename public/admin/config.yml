@@ -69,3 +69,4 @@ collections:
           - { label: Institución, name: institucion, widget: string }
           - { label: Temporada, name: temporada, widget: string }
           - { label: Logo SVG o imagen, name: logo, widget: image, required: false }
+          - { label: Foto del hero (1920 × 1280 recomendado), name: fotoHero, widget: image, required: false, hint: "Sube aquí la foto del equipo. Se recorta de forma responsiva para cubrir el fondo." }

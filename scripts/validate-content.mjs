@@ -8,6 +8,13 @@ const siteContent = await readJSON("content/site.json");
 if (!Array.isArray(matchesContent.partidos)) throw new Error("content/partidos.json debe contener un arreglo partidos.");
 if (!Array.isArray(rosterContent.jugadores)) throw new Error("content/plantel.json debe contener un arreglo jugadores.");
 if (!siteContent.nombre?.trim() || !siteContent.institucion?.trim() || !siteContent.temporada?.trim()) throw new Error("content/site.json debe incluir nombre, institución y temporada.");
+if (siteContent.fotoHero !== undefined && typeof siteContent.fotoHero !== "string") {
+  throw new Error("content/site.json: fotoHero debe ser una ruta de imagen o estar vacío.");
+}
+if (siteContent.fotoHero?.trim()
+  && !(siteContent.fotoHero.startsWith("/") && !siteContent.fotoHero.startsWith("//") || siteContent.fotoHero.startsWith("https://"))) {
+  throw new Error("content/site.json: fotoHero debe ser una ruta local o una URL HTTPS.");
+}
 
 for (const [index, match] of matchesContent.partidos.entries()) {
   const label = `Partido ${index + 1}`;

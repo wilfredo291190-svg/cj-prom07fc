@@ -48,3 +48,7 @@ La aplicación se puede instalar como **CJ07 App** desde el botón del pie de p�
 Cada partido programado incluye **Guardar en mi calendario**, que descarga un archivo `.ics` compatible con Calendario de Apple y las apps de calendario de Android.
 
 El service worker puede recibir y mostrar un evento push, pero todavía no existe un emisor, una clave VAPID ni almacenamiento persistente de suscripciones. Por tanto, las notificaciones push de próximos partidos no están activas; para habilitarlas hay que elegir/configurar el proveedor de envío y aportar sus credenciales. Tampoco se configuraron Google Analytics ni Search Console porque faltan el dominio definitivo, el identificador de medición y la verificación de propiedad.
+
+## Foto principal del equipo
+
+En **Administración → Configuración del club → Identidad**, carga la imagen en el campo **Foto del hero**. Se recomienda una foto horizontal de 1920 × 1280 px; el sitio la recorta de forma responsiva para cubrir el fondo del hero, sin estirarla. Publica los cambios del CMS para actualizar el sitio. Si se deja el campo vacío, se conserva el fondo gráfico actual.

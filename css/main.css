@@ -533,6 +533,27 @@ h2 { font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.05; }
   transform: scaleX(1.7);
 }
 
+.hero-image {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+.hero-image[hidden] { display: none; }
+.hero.has-hero-image::before {
+  inset: 0;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(90deg, rgba(8, 11, 8, 0.96) 0%, rgba(8, 11, 8, 0.76) 46%, rgba(8, 11, 8, 0.2) 100%), linear-gradient(0deg, rgba(8, 11, 8, 0.4), transparent 55%);
+  transform: none;
+}
+.hero.has-hero-image::after,
+.hero.has-hero-image .hero-watermark { display: none; }
+.hero.has-hero-image { min-height: clamp(30rem, 42vw, 40rem); }
+
 .hero::after {
   right: 24%;
   top: -40%;
@@ -654,6 +675,7 @@ footer a { color: var(--accent); }
   .nav-links a { display: block; padding: 0.9rem 0; }
   .nav-links a::after { bottom: 0.45rem; right: auto; width: 2rem; }
   .hero { min-height: auto; align-items: flex-start; padding: 2rem 1.5rem; }
+  .hero.has-hero-image { min-height: 30rem; }
   .grid-dashboard, .match-list { grid-template-columns: minmax(0, 1fr); }
   .card { padding: 1.25rem; }
   .section-heading { align-items: flex-start; }
