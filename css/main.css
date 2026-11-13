@@ -596,26 +596,23 @@ footer a {
 .table-note { color: var(--text-secondary); font-size: clamp(1rem, 0.96rem + 0.15vw, 1.125rem); }
 
 /* =========================================================
-   TABLAS RESPONSIVAS Y FLUIDAS (SIN HUECOS MUERTOS)
+   TABLAS RESPONSIVAS Y FLUIDAS (SIN CORTES NI HUECOS)
    ========================================================= */
+.card:has(.roster-table-wrap),
+.card:has(.scorers-table-wrap) {
+  max-width: 56rem;
+}
+
 .roster-table-wrap,
 .scorers-table-wrap {
   width: 100%;
   overflow-x: clip;
 }
 
-.roster-table-wrap {
-  max-width: 56rem;
-}
-
-.scorers-table-wrap {
-  max-width: 48rem;
-}
-
 .table-scroll .player-data-table {
   width: 100%;
   min-width: 0;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 .player-data-table th,
@@ -627,20 +624,29 @@ footer a {
 
 .player-data-table th:first-child,
 .player-data-table td:first-child {
-  width: 3.75rem;
+  width: 1%;
+  padding-right: 1rem;
   text-align: left;
   white-space: nowrap;
 }
 
+.player-data-table th:nth-child(2),
+.player-data-table td:nth-child(2) {
+  width: 98%;
+  max-width: 0;
+}
+
 .player-data-table th:last-child,
 .player-data-table td:last-child {
-  width: 5.25rem;
+  width: 1%;
+  padding-left: 1rem;
   text-align: right;
   white-space: nowrap;
 }
 
 .player-data-table td.empty-state {
   width: auto;
+  max-width: none;
   text-align: center;
   white-space: normal;
 }
@@ -653,18 +659,9 @@ footer a {
   gap: 0.75rem;
 }
 
-.player-data-table .player-name::after {
-  content: "";
-  flex: 1 1 0.75rem;
-  min-width: 0.5rem;
-  height: 1px;
-  border-bottom: 1px dotted rgba(252, 253, 253, 0.16);
-  opacity: 0.85;
-}
-
 .player-data-table .player-name > span:last-child {
   display: block;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-width: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -757,17 +754,17 @@ footer a {
 
   .player-data-table th,
   .player-data-table td {
-    padding: 0.65rem 0.55rem;
+    padding: 0.65rem 0.65rem;
   }
 
   .player-data-table th:first-child,
   .player-data-table td:first-child {
-    width: 2.75rem;
+    padding-right: 0.75rem;
   }
 
   .player-data-table th:last-child,
   .player-data-table td:last-child {
-    width: 3.85rem;
+    padding-left: 0.75rem;
   }
 
   .player-data-table .player-name {
@@ -784,17 +781,17 @@ footer a {
 @media (max-width: 480px) {
   .player-data-table th,
   .player-data-table td {
-    padding: 0.55rem 0.45rem;
+    padding: 0.55rem 0.5rem;
   }
 
   .player-data-table th:first-child,
   .player-data-table td:first-child {
-    width: 2.5rem;
+    padding-right: 0.65rem;
   }
 
   .player-data-table th:last-child,
   .player-data-table td:last-child {
-    width: 3.45rem;
+    padding-left: 0.65rem;
   }
 
   .roster-table td:first-child {
@@ -842,17 +839,17 @@ footer a {
 
   .player-data-table th,
   .player-data-table td {
-    padding: 0.5rem 0.35rem;
+    padding: 0.5rem 0.4rem;
   }
 
   .player-data-table th:first-child,
   .player-data-table td:first-child {
-    width: 2.25rem;
+    padding-right: 0.55rem;
   }
 
   .player-data-table th:last-child,
   .player-data-table td:last-child {
-    width: 3.1rem;
+    padding-left: 0.55rem;
   }
 
   .player-data-table .player-name {
