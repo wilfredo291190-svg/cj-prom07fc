@@ -736,13 +736,20 @@ footer a { color: var(--accent); }
 .roster-table th:last-child,
 .roster-table td:last-child { width: clamp(5.5rem, 23vw, 8rem); }
 .roster-table .player-name { min-width: 0; gap: clamp(0.4rem, 1.4vw, 0.75rem); }
-.roster-table .player-name > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+.roster-table .player-name > span:last-child {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
 .roster-table .player-avatar { width: clamp(2rem, 8vw, 2.75rem); height: clamp(2rem, 8vw, 2.75rem); flex-basis: clamp(2rem, 8vw, 2.75rem); }
 .roster-table .player-open {
   display: inline-flex;
+  width: 100%;
   max-width: 100%;
+  min-width: 0;
   align-items: center;
   gap: inherit;
+  overflow-x: auto;
+  overflow-y: hidden;
   border: 0;
   background: transparent;
   color: inherit;
