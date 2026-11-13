@@ -19,7 +19,8 @@ const sameTeam = (first, second) => normalizeTeamName(first) === normalizeTeamNa
 const formatDate = (value) => {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "Fecha por confirmar";
-  return new Intl.DateTimeFormat("es", { dateStyle: "full", timeZone: "America/Panama" }).format(date);
+  const formatted = new Intl.DateTimeFormat("es", { dateStyle: "full", timeZone: "America/Panama" }).format(date);
+  return formatted.charAt(0).toLocaleUpperCase("es") + formatted.slice(1);
 };
 
 const formatTime = (value) => {
@@ -83,7 +84,7 @@ const matchCard = (match, clubName = CLUB_NAME) => {
       <p class="match-detail">${icon("clock")}<time datetime="${escapeHTML(match.fecha)}">${escapeHTML(formatTime(match.fecha))}</time></p>
       <p class="match-detail">${icon("pin")}<span>${escapeHTML(match.sede || DEFAULT_VENUE)}</span></p>
       ${scorers ? `<p class="match-detail match-scorers">Goleadores: ${scorers}</p>` : ""}
-      ${!finished && match.estado === "programado" ? `<div class="match-actions"><button class="calendar-save" type="button" data-calendar-match="${escapeHTML(calendarData)}">Guardar en mi calendario</button></div>` : ""}
+      ${!finished && match.estado === "programado" ? `<div class="match-actions"><button class="calendar-save" type="button" data-calendar-match="${escapeHTML(calendarData)}">Añadir al calendario</button></div>` : ""}
     </div>
   </article>`;
 };
@@ -337,6 +338,31 @@ const saveMatchToCalendar = (match) => {
 };
 
 const setupPWAInstall = () => {
+  const installButtons = [...document.querySelectorAll("[data-install-app]")];
+  const installedKey = "cj07-app-installed";
+  const hideInstallButtons = () => installButtons.forEach((button) => { button.hidden = true; });
+  const isInstalled = () => {
+    if (window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true) return true;
+    try {
+      return localStorage.getItem(installedKey) === "true";
+    } catch (error) {
+      console.warn("No se pudo consultar el estado de instalación de CJ07 App.", error);
+      return false;
+    }
+  };
+
+  if (isInstalled()) hideInstallButtons();
+  window.addEventListener("appinstalled", () => {
+    try {
+      localStorage.setItem(installedKey, "true");
+    } catch (error) {
+      console.warn("No se pudo guardar el estado de instalación de CJ07 App.", error);
+    }
+    hideInstallButtons();
+  });
+  window.addEventListener("storage", (event) => {
+    if (event.key === installedKey && event.newValue === "true") hideInstallButtons();
+  });
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
     installPrompt = event;
@@ -398,7 +424,10 @@ const setupReveals = () => {
 };
 
 const start = async () => {
-  if (!PAGE) return;
+  if (!PAGE) {
+    document.body.classList.remove("is-loading");
+    return;
+  }
   setupNavigation();
   setupInteractions();
   setupReveals();
@@ -420,8 +449,11 @@ const start = async () => {
       renderScorers(currentMatches, currentPlayers);
     }
     if (PAGE === "plantel") renderRoster(currentPlayers, currentMatches);
-  } catch {
+  } catch (error) {
+    console.error("No se pudo cargar el contenido del sitio.", error);
     document.querySelectorAll(".empty-state").forEach((element) => { element.textContent = "No se pudieron cargar los datos publicados."; });
+  } finally {
+    document.body.classList.remove("is-loading");
   }
 };
 

@@ -22,7 +22,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
 </head>
-<body>
+<body class="is-loading">
+  <div class="loading-screen" role="status" aria-label="Cargando CJ Prom 07">
+    <img src="/assets/img/cj-prom-07-logo.svg" alt="" width="88" height="88">
+    <span class="loading-label">CJ PROM 07</span>
+    <span class="loading-track" aria-hidden="true"><span></span></span>
+    <span class="visually-hidden">Cargando el sitio…</span>
+  </div>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header>
     <div class="nav-container">
@@ -50,6 +56,7 @@
   <footer>
     <p>&copy; 2026 CJ Prom 07 · Colegio Javier</p>
     <button class="footer-install" type="button" data-install-app>Instalar CJ07 App</button>
+    <p class="team-motto">#Dale07</p>
   </footer>
   <script type="module" src="/js/app.js"></script>
 </body>
