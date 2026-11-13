@@ -76,9 +76,10 @@
       "posicion": "MC"
     },
     {
-      "nombre": "CARLOS MORALES",
+      "nombre": "CARLOS JULIO MORALES",
       "dorsal": 23,
-      "posicion": "MC"
+      "posicion": "MC",
+      "imagen": "/assets/img/carlos-julio.webp"
     },
     {
       "nombre": "KEVIN CASTILLO",
@@ -88,7 +89,8 @@
     {
       "nombre": "ADRIAN RUIDIAZ",
       "dorsal": 25,
-      "posicion": "MC"
+      "posicion": "MC",
+      "imagen": "/assets/img/ruidiaz.webp"
     },
     {
       "nombre": "ANTONIO HERRERA",
@@ -117,7 +119,8 @@
     {
       "nombre": "EDGAR CERRUD",
       "dorsal": 8,
-      "posicion": "DL"
+      "posicion": "DL",
+      "imagen": "/assets/img/edgar.webp"
     },
     {
       "nombre": "BENJAMIN JOHNSON",
@@ -132,8 +135,9 @@
     },
     {
       "nombre": "AUGUSTO DIAZ",
-      "dorsal": null,
-      "posicion": "DT"
+      "dorsal": "",
+      "posicion": "DT",
+      "imagen": "/assets/img/augusto.webp"
     }
   ]
 }
