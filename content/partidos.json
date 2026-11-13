@@ -1,92 +1,114 @@
 {
   "partidos": [
     {
-      "jornada": 1,
-      "fecha": "2026-09-19T16:30:00-05:00",
+      "estado": "finalizado",
+      "visitante": "PROM 07",
       "local": "Sele 00",
-      "visitante": "PROM 07",
       "sede": "Cancha del Colegio Javier",
-      "estado": "finalizado",
-      "golesLocal": 1,
+      "goleadores": [
+        {
+          "jugador": "Valle",
+          "goles": 2
+        },
+        {
+          "jugador": "Royo",
+          "goles": 1
+        }
+      ],
       "golesVisitante": 3,
-      "goleadores": [
-        { "jugador": "Valle", "goles": 2 },
-        { "jugador": "Royo", "goles": 1 }
-      ]
-    },
-    {
-      "jornada": 2,
-      "fecha": "2026-09-26T15:15:00-05:00",
-      "local": "Prom 2022",
-      "visitante": "PROM 07",
-      "sede": "Cancha del Colegio Javier",
-      "estado": "finalizado",
-      "golesLocal": 0,
-      "golesVisitante": 1,
-      "goleadores": [
-        { "jugador": "Herrera", "goles": 1 }
-      ]
-    },
-    {
-      "jornada": 3,
-      "fecha": "2026-10-04T16:30:00-05:00",
-      "local": "La14",
-      "visitante": "PROM 07",
-      "sede": "Cancha del Colegio Javier",
-      "estado": "finalizado",
-      "golesLocal": 0,
-      "golesVisitante": 2,
-      "goleadores": [
-        { "jugador": "Johnson", "goles": 2 }
-      ]
-    },
-    {
-      "jornada": 4,
-      "fecha": "2026-10-10T15:15:00-05:00",
-      "local": "PROM 07",
-      "visitante": "Good Life",
-      "sede": "Cancha del Colegio Javier",
-      "estado": "programado",
-      "golesLocal": null,
-      "golesVisitante": null
-    },
-    {
-      "jornada": 5,
-      "fecha": "2026-10-18T14:00:00-05:00",
-      "local": "PROM 07",
-      "visitante": "Perejil 09",
-      "sede": "Cancha del Colegio Javier",
-      "estado": "finalizado",
-      "golesLocal": 2,
-      "golesVisitante": 2,
-      "goleadores": [
-        { "jugador": "Polo", "goles": 1 },
-        { "jugador": "Cerrud", "goles": 1 }
-      ]
-    },
-    {
-      "jornada": 6,
-      "fecha": "2026-10-24T15:15:00-05:00",
-      "local": "PROM 07",
-      "visitante": "Prom 2013",
-      "sede": "Cancha del Colegio Javier",
-      "estado": "finalizado",
       "golesLocal": 1,
-      "golesVisitante": 2,
-      "goleadores": [
-        { "jugador": "Johnson", "goles": 1 }
-      ]
+      "jornada": 1,
+      "fecha": "2026-09-19T16:30:00-05:00"
     },
     {
-      "jornada": 7,
-      "fecha": "2026-11-01T14:00:00-05:00",
-      "local": "PROM 07",
-      "visitante": "Prom 06",
-      "sede": "Cancha del Colegio Javier",
       "estado": "finalizado",
+      "visitante": "PROM 07",
+      "local": "Prom 2022",
+      "sede": "Cancha del Colegio Javier",
+      "goleadores": [
+        {
+          "jugador": "Herrera",
+          "goles": 1
+        }
+      ],
+      "golesVisitante": 1,
       "golesLocal": 0,
+      "jornada": 2,
+      "fecha": "2026-09-26T15:15:00-05:00"
+    },
+    {
+      "estado": "finalizado",
+      "visitante": "PROM 07",
+      "local": "La14",
+      "sede": "Cancha del Colegio Javier",
+      "goleadores": [
+        {
+          "jugador": "Johnson",
+          "goles": 2
+        }
+      ],
       "golesVisitante": 2,
-      "goleadores": []
+      "golesLocal": 0,
+      "jornada": 3,
+      "fecha": "2026-10-04T16:30:00-05:00"
+    },
+    {
+      "estado": "programado",
+      "visitante": "Good Life",
+      "local": "PROM 07",
+      "sede": "Cancha del Colegio Javier",
+      "goleadores": [],
+      "golesVisitante": null,
+      "golesLocal": null,
+      "jornada": 4,
+      "fecha": "2026-11-21T15:15:00-05:00"
+    },
+    {
+      "estado": "finalizado",
+      "visitante": "Perejil 09",
+      "local": "PROM 07",
+      "sede": "Cancha del Colegio Javier",
+      "goleadores": [
+        {
+          "jugador": "Polo",
+          "goles": 1
+        },
+        {
+          "jugador": "Cerrud",
+          "goles": 1
+        }
+      ],
+      "golesVisitante": 2,
+      "golesLocal": 2,
+      "jornada": 5,
+      "fecha": "2026-10-18T14:00:00-05:00"
+    },
+    {
+      "estado": "finalizado",
+      "visitante": "Prom 2013",
+      "local": "PROM 07",
+      "sede": "Cancha del Colegio Javier",
+      "goleadores": [
+        {
+          "jugador": "Johnson",
+          "goles": 1
+        }
+      ],
+      "golesVisitante": 2,
+      "golesLocal": 1,
+      "jornada": 6,
+      "fecha": "2026-10-24T15:15:00-05:00"
+    },
+    {
+      "estado": "finalizado",
+      "visitante": "Prom 06",
+      "local": "PROM 07",
+      "sede": "Cancha del Colegio Javier",
+      "goleadores": [],
+      "golesVisitante": 2,
+      "golesLocal": 0,
+      "jornada": 7,
+      "fecha": "2026-11-01T14:00:00-05:00"
     },
     {
       "jornada": 8,
