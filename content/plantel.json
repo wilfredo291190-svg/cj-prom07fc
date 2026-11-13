@@ -138,6 +138,18 @@
       "dorsal": "",
       "posicion": "DT",
       "imagen": "/assets/img/augusto.webp"
+    },
+    {
+      "nombre": "VÍCTOR URRUTIA",
+      "dorsal": 31,
+      "posicion": "DF",
+      "imagen": "/assets/img/vittin.webp"
+    },
+    {
+      "nombre": "JUSTIN CERRUD",
+      "dorsal": 98,
+      "posicion": "MC",
+      "imagen": "/assets/img/justin.webp"
     }
   ]
 }
