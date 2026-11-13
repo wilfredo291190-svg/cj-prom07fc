@@ -596,12 +596,20 @@ footer a {
 .table-note { color: var(--text-secondary); font-size: clamp(1rem, 0.96rem + 0.15vw, 1.125rem); }
 
 /* =========================================================
-   TABLAS RESPONSIVAS Y FLUIDAS (DESKTOP HASTA 320px iPhone SE)
+   TABLAS RESPONSIVAS Y FLUIDAS (SIN HUECOS MUERTOS)
    ========================================================= */
 .roster-table-wrap,
 .scorers-table-wrap {
   width: 100%;
   overflow-x: clip;
+}
+
+.roster-table-wrap {
+  max-width: 56rem;
+}
+
+.scorers-table-wrap {
+  max-width: 48rem;
 }
 
 .table-scroll .player-data-table {
@@ -612,22 +620,22 @@ footer a {
 
 .player-data-table th,
 .player-data-table td {
-  padding: 0.85rem 0.9rem;
+  padding: 0.85rem 1rem;
   font-size: var(--type-body);
   vertical-align: middle;
 }
 
 .player-data-table th:first-child,
 .player-data-table td:first-child {
-  width: 4rem;
+  width: 3.75rem;
   text-align: left;
   white-space: nowrap;
 }
 
 .player-data-table th:last-child,
 .player-data-table td:last-child {
-  width: 6rem;
-  text-align: center;
+  width: 5.25rem;
+  text-align: right;
   white-space: nowrap;
 }
 
@@ -645,9 +653,18 @@ footer a {
   gap: 0.75rem;
 }
 
+.player-data-table .player-name::after {
+  content: "";
+  flex: 1 1 0.75rem;
+  min-width: 0.5rem;
+  height: 1px;
+  border-bottom: 1px dotted rgba(252, 253, 253, 0.16);
+  opacity: 0.85;
+}
+
 .player-data-table .player-name > span:last-child {
   display: block;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-width: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -740,7 +757,7 @@ footer a {
 
   .player-data-table th,
   .player-data-table td {
-    padding: 0.65rem 0.45rem;
+    padding: 0.65rem 0.55rem;
   }
 
   .player-data-table th:first-child,
@@ -750,34 +767,34 @@ footer a {
 
   .player-data-table th:last-child,
   .player-data-table td:last-child {
-    width: 4.1rem;
+    width: 3.85rem;
   }
 
   .player-data-table .player-name {
-    gap: 0.5rem;
+    gap: 0.55rem;
   }
 
   .player-data-table .player-avatar {
-    width: 2rem;
-    height: 2rem;
-    flex-basis: 2rem;
+    width: 2.05rem;
+    height: 2.05rem;
+    flex-basis: 2.05rem;
   }
 }
 
 @media (max-width: 480px) {
   .player-data-table th,
   .player-data-table td {
-    padding: 0.55rem 0.35rem;
+    padding: 0.55rem 0.45rem;
   }
 
   .player-data-table th:first-child,
   .player-data-table td:first-child {
-    width: 2.6rem;
+    width: 2.5rem;
   }
 
   .player-data-table th:last-child,
   .player-data-table td:last-child {
-    width: 3.75rem;
+    width: 3.45rem;
   }
 
   .roster-table td:first-child {
@@ -785,21 +802,21 @@ footer a {
   }
 
   .player-data-table .player-name {
-    gap: 0.4rem;
+    gap: 0.45rem;
   }
 
   .player-data-table .player-avatar {
-    width: 1.85rem;
-    height: 1.85rem;
-    flex-basis: 1.85rem;
+    width: 1.9rem;
+    height: 1.9rem;
+    flex-basis: 1.9rem;
     font-size: 0.75rem;
   }
 
   .player-data-table .player-name > span:last-child {
     font-family: var(--font-display);
-    font-size: clamp(0.95rem, 0.85rem + 0.5vw, 1.075rem);
+    font-size: clamp(1.05rem, 0.92rem + 0.55vw, 1.175rem);
     font-weight: 600;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.015em;
   }
 
   .hero { display: block; }
@@ -825,31 +842,31 @@ footer a {
 
   .player-data-table th,
   .player-data-table td {
-    padding: 0.5rem 0.25rem;
+    padding: 0.5rem 0.35rem;
   }
 
   .player-data-table th:first-child,
   .player-data-table td:first-child {
-    width: 2.35rem;
+    width: 2.25rem;
   }
 
   .player-data-table th:last-child,
   .player-data-table td:last-child {
-    width: 3.35rem;
+    width: 3.1rem;
   }
 
   .player-data-table .player-name {
-    gap: 0.35rem;
+    gap: 0.4rem;
   }
 
   .player-data-table .player-avatar {
-    width: 1.65rem;
-    height: 1.65rem;
-    flex-basis: 1.65rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    flex-basis: 1.7rem;
   }
 
   .player-data-table .player-name > span:last-child {
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 
   .scorer-goals strong {
